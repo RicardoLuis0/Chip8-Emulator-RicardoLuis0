@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+#Codeblocks files
+*.bak
+*.layout
+*.depend
+
+#Obj/Bin folders
+bin/
+obj/
