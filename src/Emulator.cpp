@@ -10,11 +10,16 @@ constexpr T1 min(T1 a,T2 b){
 }
 
 Emulator::Emulator(){
-    resetRAM();
 }
 
 void Emulator::resetRegisters(unsigned short program_counter){
+    memset(V,0,sizeof(V));
     memset(stack,0,sizeof(stack));
+    SP=0;
+    PC=program_counter;
+    DT=0;
+    ST=0;
+    I=0;
 }
 
 void Emulator::resetRAM(){
@@ -29,5 +34,5 @@ void Emulator::loadProgramFile(std::string file,unsigned short starting_position
 
 void Emulator::loadProgram(Program program,unsigned short starting_position){
     memcpy(RAM+starting_position,program.data,min(program.length,4096-starting_position));
-    PC=starting_position;
+    resetRegisters(starting_position);
 }

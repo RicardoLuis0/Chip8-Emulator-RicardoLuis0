@@ -13,14 +13,14 @@ class Emulator {
         void loadProgramFile(std::string file,unsigned short starting_position=0x200);
         void loadProgram(Program program,unsigned short starting_position=0x200);
     protected:
-        unsigned char RAM[4096];//program memory
-        unsigned char VRAM[2048];//video memory
-        unsigned char DT;//delay timer
-        unsigned char ST;//sound timer
-        unsigned short I;//address register
-        unsigned short PC;//program counter
-        unsigned short stack[24];
-        unsigned short SP;//stack pointer
+        unsigned char RAM[4096]={0};//program memory
+        unsigned char VRAM[2048]={0};//video memory
+        unsigned char DT=0;//delay timer
+        unsigned char ST=0;//sound timer
+        unsigned short I=0;//address register
+        unsigned short PC=0;//program counter
+        unsigned short stack[24]={0};
+        unsigned short SP=0;//stack pointer
         union{//data registers
             unsigned char V[16];
             struct{
