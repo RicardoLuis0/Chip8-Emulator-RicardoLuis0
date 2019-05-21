@@ -1,8 +1,6 @@
 #include "FileLoader.h"
-
+#include <cstdio>
 #include <stdexcept>
-
-#define PROGRAM_MAX_SIZE 4096
 
 Program FileLoader::load(std::string filename,int max_len){
     FILE * f=fopen(filename.c_str(),"rb");

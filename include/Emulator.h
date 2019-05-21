@@ -1,12 +1,17 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
+#include <string>
 #include "Program.h"
 
 class Emulator {
     public:
         Emulator();
-        void loadProgram(Program program);
+        void resetRAM();
+        void resetRegisters(unsigned short program_counter);
+        void runCycle();
+        void loadProgramFile(std::string file,unsigned short starting_position=0x200);
+        void loadProgram(Program program,unsigned short starting_position=0x200);
     protected:
         unsigned char RAM[4096];//program memory
         unsigned char VRAM[2048];//video memory
