@@ -111,20 +111,22 @@ void Emulator::runCycle(){
     case 0x9://X=operation.section2,Y=operation.section3
         switch(operation.section4){
         case 0x0://Skips the next instruction if VX doesn't equal VY
-            throw std::runtime_error("unimplemented operation");//TODO
+            if(V[operation.section2]!=V[operation.section3]){
+                readInstruction();
+            }
             break;
         default:
             throw std::runtime_error("unsupported operation");
         }
         break;
     case 0xA://NNN=operation.section234, Sets I to address NNN
-        throw std::runtime_error("unimplemented operation");//TODO
+        I=operation.section234;
         break;
     case 0xB://NNN=operation.section234, Jumps to the address NNN plus V0
-        throw std::runtime_error("unimplemented operation");//TODO
+        PC=operation.section234+V0;
         break;
     case 0xC://X=operation.section2,NN=operation.section34, Sets VX to the result of a bitwise and operation on a random number (Typically: 0 to 255) and NN
-        throw std::runtime_error("unimplemented operation");//TODO
+        V[operation.section2]=rand()&operation.section34;
         break;
     case 0xD://X=operation.section2,Y=operation.section3,N=operation.section4, Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn't change after the execution of this instruction. As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn't happen
         throw std::runtime_error("unimplemented operation");//TODO
@@ -132,10 +134,14 @@ void Emulator::runCycle(){
     case 0xE://X=operation.section2
         switch(operation.section34){
         case 0x9E://Skips the next instruction if the key stored in VX is pressed
-            throw std::runtime_error("unimplemented operation");//TODO
+            if(V[operation.section2]<16&&KB[V[operation.section2]]){
+                readInstruction();
+            }
             break;
         case 0xA1://Skips the next instruction if the key stored in VX isn't pressed
-            throw std::runtime_error("unimplemented operation");//TODO
+            if(V[operation.section2]>15||!KB[V[operation.section2]]){
+                readInstruction();
+            }
             break;
         default:
             throw std::runtime_error("unsupported operation");
@@ -144,19 +150,19 @@ void Emulator::runCycle(){
     case 0xF://X=operation.section2
         switch(operation.high_byte){
         case 0x07://Set VX to the value of the delay timer
-            throw std::runtime_error("unimplemented operation");//TODO
+            V[operation.section2]=DT;
             break;
         case 0x0A://A key press is awaited, and then stored in VX. Blocking Operation
             throw std::runtime_error("unimplemented operation");//TODO
             break;
         case 0x15://Sets the delay timer to VX
-            throw std::runtime_error("unimplemented operation");//TODO
+            DT=V[operation.section2];
             break;
         case 0x18://Sets the sound timer to VX
-            throw std::runtime_error("unimplemented operation");//TODO
+            ST=V[operation.section2];
             break;
         case 0x1E://Adds VX to I
-            throw std::runtime_error("unimplemented operation");//TODO
+            I+=V[operation.section2];
             break;
         case 0x29://Sets I to the location of the sprite for the character in VX. Characters 0-F (in hexadecimal) are represented by a 4x5 font
             throw std::runtime_error("unimplemented operation");//TODO
@@ -176,6 +182,10 @@ void Emulator::runCycle(){
     }
 }
 
+Emulator::Emulator(){
+    resetRAM();
+}
+
 void Emulator::resetRegisters(unsigned short program_counter){
     memset(V,0,sizeof(V));
     memset(stack,0,sizeof(stack));
@@ -185,10 +195,126 @@ void Emulator::resetRegisters(unsigned short program_counter){
     ST=0;
     I=0;
 }
+const unsigned char fontset[16][5]{
+    {
+        0b01100000,
+        0b10010000,
+        0b10010000,
+        0b10010000,
+        0b01100000,
+    },//0
+    {
+        0b00100000,
+        0b01100000,
+        0b00100000,
+        0b00100000,
+        0b01110000,
+    },//1
+    {
+        0b11110000,
+        0b00010000,
+        0b11110000,
+        0b10000000,
+        0b11110000,
+    },//2
+    {
+        0b11110000,
+        0b00010000,
+        0b11110000,
+        0b00010000,
+        0b11110000,
+    },//3
+    {
+        0b10010000,
+        0b10010000,
+        0b11110000,
+        0b00010000,
+        0b00010000,
+    },//4
+    {
+        0b11110000,
+        0b10000000,
+        0b11110000,
+        0b00010000,
+        0b11100000,
+    },//5
+    {
+        0b01110000,
+        0b10000000,
+        0b11110000,
+        0b10010000,
+        0b01100000,
+    },//6
+    {
+        0b11110000,
+        0b00010000,
+        0b00100000,
+        0b01000000,
+        0b01000000,
+    },//7
+    {
+        0b01100000,
+        0b10010000,
+        0b11110000,
+        0b10010000,
+        0b01100000,
+    },//8
+    {
+        0b01110000,
+        0b10010000,
+        0b01110000,
+        0b00010000,
+        0b01100000,
+    },//9
+    {
+        0b01100000,
+        0b10010000,
+        0b11110000,
+        0b10010000,
+        0b10010000,
+    },//A
+    {
+        0b11100000,
+        0b10010000,
+        0b11110000,
+        0b10010000,
+        0b11100000,
+    },//B
+    {
+        0b01100000,
+        0b10010000,
+        0b10000000,
+        0b10010000,
+        0b01100000,
+    },//C
+    {
+        0b11100000,
+        0b10010000,
+        0b00010000,
+        0b10010000,
+        0b11100000,
+    },//D
+    {
+        0b11110000,
+        0b10000000,
+        0b11100000,
+        0b10000000,
+        0b11110000,
+    },//E
+    {
+        0b11110000,
+        0b10000000,
+        0b11100000,
+        0b10000000,
+        0b10000000,
+    },//F
+};
 
 void Emulator::resetRAM(){
     memset(RAM,0,sizeof(RAM));
+    loadFonts(fontset,0x0);
 }
+
 void Emulator::resetVRAM(){
     memset(VRAM,0,sizeof(VRAM));
 }
@@ -212,4 +338,13 @@ RawInstruction Emulator::readInstruction(){
 void Emulator::doSound(){
     std::cout<<"Beep!";
     //TODO
+}
+
+void Emulator::loadFonts(const unsigned char fonts[16][5],unsigned short load_address=0x0){
+    for(int i=0;i<16;i++,load_address+=5){
+        font_addr[i]=load_address;
+        for(int j=0;j<5;j++){
+            RAM[load_address+j]=fonts[i][j];
+        }
+    }
 }
