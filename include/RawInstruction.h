@@ -7,10 +7,25 @@ union RawInstruction {
     unsigned short whole;
     unsigned char bytes[2];
     struct{
+        union{
+            unsigned char low_byte;
+            unsigned char section12;
+        };
+        union{
+            unsigned char high_byte;
+            unsigned char section34;
+        };
+    };
+    struct{
         unsigned char section1:4;
-        unsigned char section2:4;
-        unsigned char section3:4;
-        unsigned char section4:4;
+        union{
+            unsigned short section234:12;
+            struct{
+                unsigned char section2:4;
+                unsigned char section3:4;
+                unsigned char section4:4;
+            };
+        };
     };
 };
 
