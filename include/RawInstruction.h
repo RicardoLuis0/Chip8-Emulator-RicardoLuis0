@@ -9,21 +9,20 @@ union RawInstruction {
     struct{
         union{
             unsigned char low_byte;
-            unsigned char section12;
+            unsigned char section34;
         };
         union{
             unsigned char high_byte;
-            unsigned char section34;
+            unsigned char section12;
         };
     };
     struct{
-        unsigned char section1:4;
         union{
-            unsigned short section234:12;
             struct{
-                unsigned char section2:4;
-                unsigned char section3:4;
-                unsigned char section4:4;
+                unsigned short :4,section234:12;
+            };
+            struct{
+                unsigned char section4:4,section3:4,section2:4,section1:4;
             };
         };
     };

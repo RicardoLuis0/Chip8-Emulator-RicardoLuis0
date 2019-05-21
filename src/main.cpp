@@ -3,6 +3,7 @@
 
 #include "ArgumentParser.h"
 #include "Console.h"
+#include "Emulator.h"
 
 int main(int argc,char ** argv){
     std::cout<<"Chip8 Emulator\nby RicardoLuis0\n\n";
@@ -24,6 +25,11 @@ int main(int argc,char ** argv){
         con.moveCursor(41,6);
         std::cout<<"Done.";
         con.moveCursor(0,8);
+    }
+    Emulator emu;
+    emu.loadProgramFile(file);
+    while(1){
+        emu.runCycle();
     }
     return 0;
 }
