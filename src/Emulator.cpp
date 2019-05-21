@@ -137,7 +137,6 @@ void Emulator::runCycle(){
         V[operation.section2]=rand()&operation.section34;
         break;
     case 0xD://X=operation.section2,Y=operation.section3,N=operation.section4, Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn't change after the execution of this instruction. As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn't happen
-        throw std::runtime_error("unimplemented operation: DRAW");//TODO
         VF=0x0;
         for(int i=0;i<operation.section4;i++){
             unsigned char data=RAM[I+i];
