@@ -108,7 +108,7 @@ void Emulator::runCycle(){
     case 0xC://X=operation.section2,NN=operation.section34, Sets VX to the result of a bitwise and operation on a random number (Typically: 0 to 255) and NN
         throw std::runtime_error("unimplemented operation");
         break;
-    case 0xD://X=operation.section2,Y=operation.section3,N=operation.section4, Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn’t change after the execution of this instruction. As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn’t happen
+    case 0xD://X=operation.section2,Y=operation.section3,N=operation.section4, Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn't change after the execution of this instruction. As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn't happen
         throw std::runtime_error("unimplemented operation");
         break;
     case 0xE://X=operation.section2
