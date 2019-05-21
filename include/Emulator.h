@@ -8,6 +8,7 @@
 class Emulator {
     public:
         Emulator();
+        void draw();
         void runCycle();
         void resetRAM();
         void resetVRAM();
@@ -15,6 +16,8 @@ class Emulator {
         void loadProgramFile(std::string file,unsigned short starting_position=0x200);
         void loadProgram(Program program,unsigned short starting_position=0x200);
     protected:
+        struct SDL_Renderer * renderer;
+        struct SDL_Window * window;
         void loadFonts(const unsigned char fonts[16][5],unsigned short load_address);
         void doSound();
         RawInstruction readInstruction();

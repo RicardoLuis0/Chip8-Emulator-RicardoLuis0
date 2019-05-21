@@ -3,6 +3,8 @@
 
 #include "Emulator.h"
 #include "FileLoader.h"
+#include <SDL2/SDL.h>
+
 template<typename T1,typename T2>
 constexpr T1 min(T1 a,T2 b){
     return (a<b?a:b);
@@ -16,7 +18,26 @@ constexpr unsigned short calcVRAMPos(unsigned char x,unsigned char y){
     return y*64+x;
 }
 
+void Emulator::draw(){
+    SDL_SetRenderDrawColor(renderer,0,0,0,255);
+    SDL_RenderClear(renderer);
+    SDL_Rect rect;
+    rect.h=10;
+    rect.w=10;
+    SDL_SetRenderDrawColor(renderer,255,255,255,255);
+    for(int y=0;y<32;y++){
+        for(int x=0;x<64;x++){
+            if(VRAM[calcVRAMPos(x,y)]!=0){
+                rect.x=x*10;
+                rect.y=y*10;
+                SDL_RenderFillRect(renderer,&rect);
+            }
+        }
+    }
+    SDL_RenderPresent(renderer);
+}
 void Emulator::runCycle(){
+    unsigned char (&memory)[4096]=RAM;
     if(DT)DT--;
     if(ST){
         doSound();
@@ -207,7 +228,12 @@ void Emulator::runCycle(){
 }
 
 Emulator::Emulator(){
+    std::cout<<" >Initializing Emulator Memory...";
     resetRAM();
+    std::cout<<"Done.\n >Creating SDL Renderer...";
+    SDL_CreateWindowAndRenderer(640,320,0,&window,&renderer);
+    SDL_RenderPresent(renderer);
+    std::cout<<"Done.\n";
 }
 
 void Emulator::resetRegisters(unsigned short program_counter){

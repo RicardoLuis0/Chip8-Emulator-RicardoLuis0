@@ -19,7 +19,7 @@ union RawInstruction {
     struct{
         union{
             struct{
-                unsigned short :4,section234:12;
+                unsigned short section234:12;
             };
             struct{
                 unsigned char section4:4,section3:4,section2:4,section1:4;

@@ -1,16 +1,17 @@
 #include <iostream>
+#include <ctime>
+#include <cstdio>
 
 
+#include <SDL2/SDL.h>
 #include "ArgumentParser.h"
 #include "Console.h"
 #include "Emulator.h"
 
 int main(int argc,char ** argv){
-    std::cout<<"Chip8 Emulator\nby RicardoLuis0\n\n";
-    std::cout<<"Creating Console Object...";
+    std::cout<<"Chip8 Emulator\nby RicardoLuis0\n\nCreating Console Object...";
     Console con;
-    std::cout<<"Done\n";
-    std::cout<<"Parsing Arguments...";
+    std::cout<<"Done.\nParsing Arguments...";
     Arguments args=ArgumentParser::parse(argc,argv);
     std::string file;
     //read file option
@@ -26,10 +27,31 @@ int main(int argc,char ** argv){
         std::cout<<"Done.";
         con.moveCursor(0,8);
     }
-    Emulator emu;
-    emu.loadProgramFile(file);
-    while(1){
-        emu.runCycle();
+    std::cout<<"Seeding random number generator...";
+    srand(time(NULL));
+    std::cout<<"Done.\nInitializing SDL2...";
+    if(SDL_Init(SDL_INIT_VIDEO)!=0){
+        std::cout<<"Error.\n >Error while Initializing SDL: "<<SDL_GetError()<<"\n";
+        return 0;
     }
+    std::cout<<"Done.\nInitializing Emulator...\n";
+    Emulator emu;
+    con.moveCursor(24,10);
+    std::cout<<"Done.";
+    con.moveCursor(0,13);
+    std::cout<<"Loading ROM...";
+    emu.loadProgramFile(file);
+    std::cout<<"Done.\nStarting Emulation...\n\n\n";
+    while(1){
+        try{
+            emu.draw();
+            emu.runCycle();
+        }catch(...){
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Exeption Thrown","An Exeption was Thrown by the Emulator, Aborting execution.",0);
+            SDL_Quit();
+            throw;
+        }
+    }
+    SDL_Quit();
     return 0;
 }
