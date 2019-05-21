@@ -3,16 +3,19 @@
 
 #include <string>
 #include "Program.h"
+#include "RawInstruction.h"
 
 class Emulator {
     public:
-        Emulator();
+        void runCycle();
         void resetRAM();
         void resetRegisters(unsigned short program_counter);
-        void runCycle();
         void loadProgramFile(std::string file,unsigned short starting_position=0x200);
         void loadProgram(Program program,unsigned short starting_position=0x200);
     protected:
+        void doSound();
+        RawInstruction readInstruction();
+        //data
         unsigned char RAM[4096]={0};//program memory
         unsigned char VRAM[2048]={0};//video memory
         unsigned char DT=0;//delay timer

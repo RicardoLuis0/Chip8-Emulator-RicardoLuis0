@@ -9,7 +9,12 @@ constexpr T1 min(T1 a,T2 b){
     return (a<b?a:b);
 }
 
-Emulator::Emulator(){
+void Emulator::runCycle(){
+    if(DT)DT--;
+    if(ST){
+        doSound();
+        ST--;
+    }
 }
 
 void Emulator::resetRegisters(unsigned short program_counter){
@@ -35,4 +40,14 @@ void Emulator::loadProgramFile(std::string file,unsigned short starting_position
 void Emulator::loadProgram(Program program,unsigned short starting_position){
     memcpy(RAM+starting_position,program.data,min(program.length,4096-starting_position));
     resetRegisters(starting_position);
+}
+
+RawInstruction Emulator::readInstruction(){
+    unsigned char byte=RAM[PC++];
+    return {byte,RAM[PC++]};
+}
+
+void Emulator::doSound(){
+    std::cout<<"Beep!";
+    //TODO
 }
