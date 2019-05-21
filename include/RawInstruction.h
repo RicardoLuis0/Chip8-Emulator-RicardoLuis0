@@ -8,11 +8,11 @@ union RawInstruction {
     unsigned char bytes[2];
     struct{
         union{
-            unsigned char low_byte;
+            unsigned char high_byte;
             unsigned char section34;
         };
         union{
-            unsigned char high_byte;
+            unsigned char low_byte;
             unsigned char section12;
         };
     };
