@@ -105,7 +105,7 @@ void Emulator::runCycle(){
             VF=carry_borrow_temp;
             break;
         default:
-            throw std::runtime_error("unsupported operation");//TODO
+            throw std::runtime_error("unsupported operation");
         }
         break;
     case 0x9://X=operation.section2,Y=operation.section3
@@ -129,17 +129,17 @@ void Emulator::runCycle(){
         V[operation.section2]=rand()&operation.section34;
         break;
     case 0xD://X=operation.section2,Y=operation.section3,N=operation.section4, Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn't change after the execution of this instruction. As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn't happen
-        throw std::runtime_error("unimplemented operation");//TODO
+        throw std::runtime_error("unimplemented operation: DRAW");//TODO
         break;
     case 0xE://X=operation.section2
         switch(operation.section34){
         case 0x9E://Skips the next instruction if the key stored in VX is pressed
-            if(V[operation.section2]<16&&KB[V[operation.section2]]){
+            if(KB[V[operation.section2]]){
                 readInstruction();
             }
             break;
         case 0xA1://Skips the next instruction if the key stored in VX isn't pressed
-            if(V[operation.section2]>15||!KB[V[operation.section2]]){
+            if(!KB[V[operation.section2]]){
                 readInstruction();
             }
             break;
@@ -153,7 +153,7 @@ void Emulator::runCycle(){
             V[operation.section2]=DT;
             break;
         case 0x0A://A key press is awaited, and then stored in VX. Blocking Operation
-            throw std::runtime_error("unimplemented operation");//TODO
+            throw std::runtime_error("unimplemented operation: Blocking Key Press");//TODO
             break;
         case 0x15://Sets the delay timer to VX
             DT=V[operation.section2];
@@ -165,16 +165,20 @@ void Emulator::runCycle(){
             I+=V[operation.section2];
             break;
         case 0x29://Sets I to the location of the sprite for the character in VX. Characters 0-F (in hexadecimal) are represented by a 4x5 font
-            throw std::runtime_error("unimplemented operation");//TODO
+            I=font_addr[V[operation.section2]];
             break;
         case 0x33://Stores the binary-coded decimal representation of VX, with the most significant of three digits at the address in I, the middle digit at I+and the least significant digit at I+2
-            throw std::runtime_error("unimplemented operation");//TODO
+            throw std::runtime_error("unimplemented operation: Binary Coded Decimal");//TODO
             break;
         case 0x55://Stores V0 to VX (including VX) in memory starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified
-            throw std::runtime_error("unimplemented operation");//TODO
+            for(int i=0;i<operation.section2;i++){
+                RAM[i+I]=V[i];
+            }
             break;
         case 0x65://Fills V0 to VX (including VX) with values from memory starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified
-            throw std::runtime_error("unimplemented operation");//TODO
+            for(int i=0;i<operation.section2;i++){
+                V[i]=RAM[i+I];
+            }
             break;
         default:
             throw std::runtime_error("unsupported operation");
@@ -195,6 +199,7 @@ void Emulator::resetRegisters(unsigned short program_counter){
     ST=0;
     I=0;
 }
+
 const unsigned char fontset[16][5]{
     {
         0b01100000,
