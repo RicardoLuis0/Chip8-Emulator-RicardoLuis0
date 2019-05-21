@@ -9,6 +9,7 @@ class Emulator {
     public:
         void runCycle();
         void resetRAM();
+        void resetVRAM();
         void resetRegisters(unsigned short program_counter);
         void loadProgramFile(std::string file,unsigned short starting_position=0x200);
         void loadProgram(Program program,unsigned short starting_position=0x200);
