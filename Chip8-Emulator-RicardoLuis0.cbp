@@ -44,12 +44,14 @@
 		<Unit filename="include/Emulator.h" />
 		<Unit filename="include/FileLoader.h" />
 		<Unit filename="include/Program.h" />
+		<Unit filename="include/RawInstruction.h" />
 		<Unit filename="src/ArgumentParser.cpp" />
 		<Unit filename="src/Arguments.cpp" />
 		<Unit filename="src/Console.cpp" />
 		<Unit filename="src/Emulator.cpp" />
 		<Unit filename="src/FileLoader.cpp" />
 		<Unit filename="src/Program.cpp" />
+		<Unit filename="src/RawInstruction.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
