@@ -9,6 +9,7 @@ class Emulator {
     public:
         Emulator();
         void draw();
+        void initDebug();
         void runCycle();
         void resetRAM();
         void resetVRAM();

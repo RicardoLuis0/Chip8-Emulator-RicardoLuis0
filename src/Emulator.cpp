@@ -18,6 +18,10 @@ constexpr unsigned short calcVRAMPos(unsigned char x,unsigned char y){
     return y*64+x;
 }
 
+void Emulator::initDebug(){
+    
+}
+
 void Emulator::draw(){
     SDL_SetRenderDrawColor(renderer,0,0,0,255);
     SDL_RenderClear(renderer);
@@ -36,6 +40,7 @@ void Emulator::draw(){
     }
     SDL_RenderPresent(renderer);
 }
+
 void Emulator::runCycle(){
     unsigned char (&memory)[4096]=RAM;
     if(DT)DT--;
