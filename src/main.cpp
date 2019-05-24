@@ -1,14 +1,16 @@
 #include <iostream>
 #include <ctime>
 #include <cstdio>
+#include <fstream>
 
 
 #include <SDL2/SDL.h>
 #include "ArgumentParser.h"
 #include "Console.h"
 #include "Emulator.h"
-
+#include "FileLoader.h"
 #include "splitString.h"
+#include "Disassembler.h"
 
 int main(int argc,char ** argv){
     std::cout<<"Chip8 Emulator\nby RicardoLuis0\n\nCreating Console Object...";
@@ -36,17 +38,40 @@ int main(int argc,char ** argv){
         std::cout<<"Error.\n >Error while Initializing SDL: "<<SDL_GetError()<<"\n";
         return 0;
     }
-    std::cout<<"Done.\nInitializing Emulator...\n";
-    Emulator emu;
-    con.moveCursor(24,10);
-    std::cout<<"Done.";
-    con.moveCursor(0,13);
-    std::cout<<"Loading ROM...";
-    emu.loadProgramFile(file);
-    std::cout<<"Done.\nStarting Emulation...\n\n\n";
-    if(args.hasOption("debug")){
+    std::cout<<"Done.\n";
+    if(args.hasOption("disassemble")){
+        Program p=FileLoader::load(file,4096-0x200);
+        std::vector<disassembled_instruction> asm_vec;
+        for(unsigned i=0;i<p.length;){
+            uint8_t byte0=p.data[i++];
+            if(i<p.length){
+                uint8_t byte1=p.data[i++];
+                asm_vec.push_back(Disassembler::disassembleInstruction(byte0,byte1));
+            }
+        }
+        std::ofstream file("output.c8asm");
+        for(disassembled_instruction asm_ins:asm_vec){
+            file<<asm_ins.getDisplay();
+        }
+    }else if(args.hasOption("debug")){
+        std::cout<<"Initializing Debugger...\n";
+        Emulator emu;
+        con.moveCursor(24,10);
+        std::cout<<"Done.";
+        con.moveCursor(0,13);
+        std::cout<<"Loading ROM...";
+        emu.loadProgramFile(file);
+        std::cout<<"Done.\nStarting Debugging...\n\n\n";
         emu.initDebug();
     }else{
+        std::cout<<"Initializing Emulator...\n";
+        Emulator emu;
+        con.moveCursor(24,10);
+        std::cout<<"Done.";
+        con.moveCursor(0,13);
+        std::cout<<"Loading ROM...";
+        emu.loadProgramFile(file);
+        std::cout<<"Done.\nStarting Emulation...\n\n\n";
         while(1){
             try{
                 emu.draw();
