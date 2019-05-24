@@ -16,6 +16,7 @@ Arguments ArgumentParser::parse(int argc,char ** argv){
                     options[option]="";
                 }
                 option=string(&str[1]);
+                reading_option=true;
                 continue;
             }
         }
