@@ -73,7 +73,7 @@ void CPU::runInstruction(operation_t op,RawInstruction data){
         xor_operation(data.section2,data.section3);
         break;
     case SUB:
-        sub(data.section2,data.section3);
+        subtract(data.section2,data.section3);
         break;
     case SHR:
         shift_right(data.section2,data.section3);

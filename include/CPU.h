@@ -16,6 +16,9 @@ enum operation_t{
     SE_REG,
     SNE,
     SNE_REG,
+    SKP,
+    SNKP,
+    KEY,
     MOV,
     MOV_REG,
     MOV_I,
@@ -24,18 +27,15 @@ enum operation_t{
     MOV_ST,
     ADD,
     ADD_REG,
+    SUB,
+    RSB,
     OR,
     AND,
     XOR,
-    SUB,
     SHR,
-    RSB,
     SHL,
     RND,
     DRW,
-    SKP,
-    SNKP,
-    KEY,
     LDFNT,
     BCD,
     STR,
@@ -60,6 +60,9 @@ class CPU {
         void skip_if_eq_reg(uint8_t X,uint8_t Y);//skip next instruction if V[X] == V[Y]
         void skip_if_not_eq(uint8_t X,uint8_t value);//skip next instruction if V[X] != value
         void skip_if_not_eq_reg(uint8_t X,uint8_t Y);//skip next instruction if V[X] != V[Y]
+        void skip_key(uint8_t X);//skip next instruction if the key at V[X] is currently pressed
+        void skip_not_key(uint8_t X);//skip next instruction if the key at V[X] is currently NOT pressed
+        void read_key(uint8_t X);//wait for keypress, and store it at V[X]
         void move(uint8_t X,uint8_t value);//move value to V[X]
         void move_reg(uint8_t X,uint8_t Y);//move V[Y] to V[X]
         void move_i(uint8_t value);//move value to I
@@ -68,18 +71,15 @@ class CPU {
         void move_st(uint8_t X);//move ST to V[X]
         void add(uint8_t X,uint8_t value);//add value to V[X]
         void add_reg(uint8_t X,uint8_t Y);//add V[Y] to V[X]
+        void subtract(uint8_t X,uint8_t Y);//subtract V[Y] from V[X]
+        void reverse_subtract(uint8_t X,uint8_t Y);//move V[Y]-V[X] to V[X]
         void or_operation(uint8_t X,uint8_t Y);//move V[X] | V[Y] to V[X]
         void and_operation(uint8_t X,uint8_t Y);//move V[X] & V[Y] to V[X]
         void xor_operation(uint8_t X,uint8_t Y);//move V[X] ^ V[Y] to V[X]
-        void sub(uint8_t X,uint8_t Y);//subtract V[Y] from V[X]
         void shift_right(uint8_t X,uint8_t Y);//shift V[X] to the right by 1, store least significant bit in V[Y]
-        void reverse_subtract(uint8_t X,uint8_t Y);//move V[Y]-V[X] to V[X]
         void shift_left(uint8_t X,uint8_t Y);//shift V[X] to the left by 1, store most significant bit in V[Y]
         void random(uint8_t X,uint8_t mask);//move random number & mask to V[X]
         void draw_sprite(uint8_t X,uint8_t Y,uint8_t height);//draw sprite stored in memory location I at (V[X],V[Y]) coords, with given height
-        void skip_key(uint8_t X);//skip next instruction if the key at V[X] is currently pressed
-        void skip_not_key(uint8_t X);//skip next instruction if the key at V[X] is currently NOT pressed
-        void read_key(uint8_t X);//wait for keypress, and store it at V[X]
         void load_font(uint8_t X);//move the location of the font for V[X] to I
         void binary_coded_decimal(uint8_t X);//store the binary coded decimal value of V[X] at I,I+1,I+2
         void store(uint8_t X);//store the values of V[0]~V[X] to memory starting at I
