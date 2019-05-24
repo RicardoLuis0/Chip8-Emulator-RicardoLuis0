@@ -15,9 +15,9 @@ operation_t CPU::decodeInstruction(RawInstruction operation){
         return JMP;
     case 0x2://CALL NNN
         return CALL;
-    case 0x3://SE VX NNN
+    case 0x3://SE VX,NN
         return SE;
-    case 0x4://SNE VX NNN
+    case 0x4://SNE VX,NN
         return SNE;
     case 0x5://SE VX,VY
         if(operation.section4==0x0){
@@ -69,7 +69,7 @@ operation_t CPU::decodeInstruction(RawInstruction operation){
         switch(operation.section34){
         case 0x9E://SKP VX
             return SKP;
-        case 0xA1://SNKP VY
+        case 0xA1://SNKP VX
             return SNKP;
         default:
             return INVALID_OPERATION;
@@ -86,8 +86,8 @@ operation_t CPU::decodeInstruction(RawInstruction operation){
         case 0x18://MOV ST,VX
             return MOV_ST;
         case 0x1E://ADD I,VX
-            return ADD;
-        case 0x29://FONT VX
+            return ADD_I;
+        case 0x29://LDFNT VX
             return LDFNT;
         case 0x33://BCD VX
             return BCD;
