@@ -1,28 +1,27 @@
 #ifndef RAWINSTRUCTION_H
 #define RAWINSTRUCTION_H
 
+#include <cstdint>
 
 union RawInstruction {
-    RawInstruction(unsigned char byte0,unsigned char byte1);
-    unsigned short whole;
-    unsigned char bytes[2];
+    RawInstruction(uint8_t byte0,uint8_t byte1);
+    uint16_t whole;
+    uint8_t bytes[2];
     struct{
         union{
-            unsigned char high_byte;
-            unsigned char section34;
+            uint8_t section34;
         };
         union{
-            unsigned char low_byte;
-            unsigned char section12;
+            uint8_t section12;
         };
     };
     struct{
         union{
             struct{
-                unsigned short section234:12;
+                uint16_t section234:12;
             };
             struct{
-                unsigned char section4:4,section3:4,section2:4,section1:4;
+                uint8_t section4:4,section3:4,section2:4,section1:4;
             };
         };
     };

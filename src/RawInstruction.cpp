@@ -1,5 +1,5 @@
 #include "RawInstruction.h"
 
-RawInstruction::RawInstruction(unsigned char byte0,unsigned char byte1):high_byte(byte1),low_byte(byte0){
+RawInstruction::RawInstruction(uint8_t byte0,uint8_t byte1):section34(byte1),section12(byte0){
     
 }
