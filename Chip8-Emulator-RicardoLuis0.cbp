@@ -41,8 +41,10 @@
 		</Linker>
 		<Unit filename="include/ArgumentParser.h" />
 		<Unit filename="include/Arguments.h" />
+		<Unit filename="include/Assembler.h" />
 		<Unit filename="include/CPU.h" />
 		<Unit filename="include/Console.h" />
+		<Unit filename="include/Debugger.h" />
 		<Unit filename="include/Disassembler.h" />
 		<Unit filename="include/Emulator.h" />
 		<Unit filename="include/FileLoader.h" />
@@ -51,12 +53,14 @@
 		<Unit filename="include/splitString.h" />
 		<Unit filename="src/ArgumentParser.cpp" />
 		<Unit filename="src/Arguments.cpp" />
+		<Unit filename="src/Assembler/Assembler.cpp" />
 		<Unit filename="src/CPU/CPU.cpp" />
 		<Unit filename="src/CPU/decodeInstruction.cpp" />
 		<Unit filename="src/CPU/operations.cpp" />
 		<Unit filename="src/CPU/runInstruction.cpp" />
 		<Unit filename="src/Console.cpp" />
-		<Unit filename="src/Disassembler.cpp" />
+		<Unit filename="src/Debugger/Debugger.cpp" />
+		<Unit filename="src/Disassembler/Disassembler.cpp" />
 		<Unit filename="src/Emulator.cpp" />
 		<Unit filename="src/FileLoader.cpp" />
 		<Unit filename="src/Program.cpp" />
