@@ -15,22 +15,7 @@ struct cpu_state{
         const uint16_t &PC,
         const uint16_t (&stack)[24],
         const uint16_t &SP,
-        const uint8_t &V0,
-        const uint8_t &V1,
-        const uint8_t &V2,
-        const uint8_t &V3,
-        const uint8_t &V4,
-        const uint8_t &V5,
-        const uint8_t &V6,
-        const uint8_t &V7,
-        const uint8_t &V8,
-        const uint8_t &V9,
-        const uint8_t &VA,
-        const uint8_t &VB,
-        const uint8_t &VC,
-        const uint8_t &VD,
-        const uint8_t &VE,
-        const uint8_t &VF
+        const uint8_t (&V)[16]
     );
     const uint16_t (&font_addr)[16];
     const uint8_t (&RAM)[4096];
@@ -42,22 +27,7 @@ struct cpu_state{
     const uint16_t &PC;
     const uint16_t (&stack)[24];
     const uint16_t &SP;
-    const uint8_t &V0;
-    const uint8_t &V1;
-    const uint8_t &V2;
-    const uint8_t &V3;
-    const uint8_t &V4;
-    const uint8_t &V5;
-    const uint8_t &V6;
-    const uint8_t &V7;
-    const uint8_t &V8;
-    const uint8_t &V9;
-    const uint8_t &VA;
-    const uint8_t &VB;
-    const uint8_t &VC;
-    const uint8_t &VD;
-    const uint8_t &VE;
-    const uint8_t &VF;
+    const uint8_t (&V)[16];
 };
 
 enum operation_t{
@@ -101,6 +71,7 @@ enum operation_t{
 class CPU {
     public:
         CPU();
+        cpu_state get_cpu_state();
         void nextInstruction();
     protected:
         operation_t decodeInstruction(RawInstruction operation);
