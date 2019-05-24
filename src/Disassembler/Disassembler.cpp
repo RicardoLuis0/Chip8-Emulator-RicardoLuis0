@@ -6,7 +6,7 @@ disassembled_instruction::disassembled_instruction(RawInstruction _data):data(_d
 disassembled_instruction::disassembled_instruction(RawInstruction _data,std::string _asm_str):data(_data),valid(true),asm_str(_asm_str){}
 
 std::string disassembled_instruction::getDisplay(){
-    return getHex(data.whole,4)+": "+(valid?asm_str:"INVALID")+"\n";
+    return (valid?asm_str+";":";INVALID ")+getHex(data.whole,4)+"\n";
 }
 
 disassembled_instruction Disassembler::disassembleInstruction(uint8_t byte0,uint8_t byte1){
