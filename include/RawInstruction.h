@@ -4,6 +4,7 @@
 #include <cstdint>
 
 union RawInstruction {
+    RawInstruction(uint16_t whole);
     RawInstruction(uint8_t byte0,uint8_t byte1);
     uint16_t whole;
     uint8_t bytes[2];
