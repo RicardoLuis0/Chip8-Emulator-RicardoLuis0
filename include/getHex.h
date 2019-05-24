@@ -5,4 +5,6 @@
 
 std::string getHex(unsigned n,unsigned d=0);
 
+std::string getHexSimple(unsigned n,unsigned d=0);
+
 #endif // GETHEX_H
