@@ -78,7 +78,7 @@ operation_t CPU::decodeInstruction(RawInstruction operation){
     case 0xF://MOV,KEY,ADD,FONT,STR,LDR
         switch(operation.high_byte){
         case 0x07://MOV VX,DT
-            return MOV_V_DT;
+            return MOV_REG_DT;
         case 0x0A://KEY VX
             return KEY;
         case 0x15://MOV DT,VX
@@ -88,7 +88,7 @@ operation_t CPU::decodeInstruction(RawInstruction operation){
         case 0x1E://ADD I,VX
             return ADD;
         case 0x29://FONT VX
-            return FONT;
+            return LDFNT;
         case 0x33://BCD VX
             return BCD;
         case 0x55://STR VX

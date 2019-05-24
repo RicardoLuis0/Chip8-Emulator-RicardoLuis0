@@ -19,7 +19,7 @@ enum operation_t{
     MOV,
     MOV_REG,
     MOV_I,
-    MOV_V_DT,
+    MOV_REG_DT,
     MOV_DT,
     MOV_ST,
     ADD,
@@ -36,7 +36,7 @@ enum operation_t{
     SKP,
     SNKP,
     KEY,
-    FONT,
+    LDFNT,
     BCD,
     STR,
     LDR,
@@ -50,14 +50,40 @@ class CPU {
         operation_t decodeInstruction(RawInstruction operation);
         void runInstruction(operation_t op,RawInstruction data);
         //operations
-        void syscall(uint16_t address);//call system procedure at address
-        void cls();//clear screen
-        void ret();//return from procedure
+        void sys_call(uint16_t address);//call system procedure at address
+        void clear_screen();//clear screen
+        void return_procedure();//return from procedure
         void jump(uint16_t address);//jump to address
-        void call(uint16_t address);//call procedure at address
-        void skip_if_eq(RawInstruction data);//skip if 
-        void skip_if_not_eq(RawInstruction data);
-        void skip_if_eq_reg(RawInstruction data);
+        void jump_v0(uint16_t address);//jump to V[0]+address
+        void call_procedure(uint16_t address);//call procedure at address
+        void skip_if_eq(uint8_t X,uint8_t value);//skip next instruction if V[X] == value
+        void skip_if_eq_reg(uint8_t X,uint8_t Y);//skip next instruction if V[X] == V[Y]
+        void skip_if_not_eq(uint8_t X,uint8_t value);//skip next instruction if V[X] != value
+        void skip_if_not_eq_reg(uint8_t X,uint8_t Y);//skip next instruction if V[X] != V[Y]
+        void move(uint8_t X,uint8_t value);//move value to V[X]
+        void move_reg(uint8_t X,uint8_t Y);//move V[Y] to V[X]
+        void move_i(uint8_t value);//move value to I
+        void move_reg_dt(uint8_t X);//move DT to V[X]
+        void move_dt(uint8_t X);//move DT to V[X]
+        void move_st(uint8_t X);//move ST to V[X]
+        void add(uint8_t X,uint8_t value);//add value to V[X]
+        void add_reg(uint8_t X,uint8_t Y);//add V[Y] to V[X]
+        void or_operation(uint8_t X,uint8_t Y);//move V[X] | V[Y] to V[X]
+        void and_operation(uint8_t X,uint8_t Y);//move V[X] & V[Y] to V[X]
+        void xor_operation(uint8_t X,uint8_t Y);//move V[X] ^ V[Y] to V[X]
+        void sub(uint8_t X,uint8_t Y);//subtract V[Y] from V[X]
+        void shift_right(uint8_t X,uint8_t Y);//shift V[X] to the right by 1, store least significant bit in V[Y]
+        void reverse_subtract(uint8_t X,uint8_t Y);//move V[Y]-V[X] to V[X]
+        void shift_left(uint8_t X,uint8_t Y);//shift V[X] to the left by 1, store most significant bit in V[Y]
+        void random(uint8_t X,uint8_t mask);//move random number & mask to V[X]
+        void draw_sprite(uint8_t X,uint8_t Y,uint8_t height);//draw sprite stored in memory location I at (V[X],V[Y]) coords, with given height
+        void skip_key(uint8_t X);//skip next instruction if the key at V[X] is currently pressed
+        void skip_not_key(uint8_t X);//skip next instruction if the key at V[X] is currently NOT pressed
+        void read_key(uint8_t X);//wait for keypress, and store it at V[X]
+        void load_font(uint8_t X);//move the location of the font for V[X] to I
+        void binary_coded_decimal(uint8_t X);//store the binary coded decimal value of V[X] at I,I+1,I+2
+        void store(uint8_t X);//store the values of V[0]~V[X] to memory starting at I
+        void load(uint8_t X);//load the values of V[0]~V[X] from memory starting at I
         //data
         uint16_t font_addr[16]={0};
         uint8_t RAM[4096]={0};//program memory
