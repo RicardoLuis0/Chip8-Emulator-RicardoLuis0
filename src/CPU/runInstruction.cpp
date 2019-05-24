@@ -1,14 +1,12 @@
 #include "CPU.h"
-#include <sstream>
+#include "getHex.h"
+#include <stdexcept>
 
 void CPU::runInstruction(operation_t op,RawInstruction data){
-    std::stringstream stream;
-    std::string str;
+
     switch(op){
     case INVALID_OPERATION:
-        stream<<"Invalid Operation: "<<"0x"<<std::hex<<data.whole<<"\n";
-        stream>>str;
-        throw std::runtime_error(str);
+        throw std::runtime_error("Invalid Operation: "+getHex(data.whole,4)+"\n");
     case SYS:
         sys_call(data.section234);
         break;
