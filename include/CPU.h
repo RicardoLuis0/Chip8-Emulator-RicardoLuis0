@@ -73,7 +73,7 @@ class CPU {
         CPU();
         cpu_state get_cpu_state();
         void nextInstruction();
-        operation_t decodeInstruction(RawInstruction operation);
+        static operation_t decodeInstruction(RawInstruction operation);
     protected:
         void runInstruction(operation_t op,RawInstruction data);
         //operations
