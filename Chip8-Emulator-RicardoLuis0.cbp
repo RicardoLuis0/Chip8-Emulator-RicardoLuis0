@@ -46,6 +46,7 @@
 		<Unit filename="include/FileLoader.h" />
 		<Unit filename="include/Program.h" />
 		<Unit filename="include/RawInstruction.h" />
+		<Unit filename="include/splitString.h" />
 		<Unit filename="src/ArgumentParser.cpp" />
 		<Unit filename="src/Arguments.cpp" />
 		<Unit filename="src/Console.cpp" />
@@ -55,6 +56,7 @@
 		<Unit filename="src/Program.cpp" />
 		<Unit filename="src/RawInstruction.cpp" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/splitString.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

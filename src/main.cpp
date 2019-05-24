@@ -8,6 +8,8 @@
 #include "Console.h"
 #include "Emulator.h"
 
+#include "splitString.h"
+
 int main(int argc,char ** argv){
     std::cout<<"Chip8 Emulator\nby RicardoLuis0\n\nCreating Console Object...";
     Console con;
@@ -42,14 +44,18 @@ int main(int argc,char ** argv){
     std::cout<<"Loading ROM...";
     emu.loadProgramFile(file);
     std::cout<<"Done.\nStarting Emulation...\n\n\n";
-    while(1){
-        try{
-            emu.draw();
-            emu.runCycle();
-        }catch(...){
-            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Exeption Thrown","An Exeption was Thrown by the Emulator, Aborting execution.",0);
-            SDL_Quit();
-            throw;
+    if(args.hasOption("debug")){
+        emu.initDebug();
+    }else{
+        while(1){
+            try{
+                emu.draw();
+                emu.runCycle();
+            }catch(...){
+                SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Exeption Thrown","An Exeption was Thrown by the Emulator, Aborting execution.",0);
+                SDL_Quit();
+                throw;
+            }
         }
     }
     SDL_Quit();

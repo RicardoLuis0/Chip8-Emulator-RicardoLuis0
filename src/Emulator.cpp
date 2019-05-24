@@ -1,6 +1,8 @@
 #include <cstring>
 #include <iostream>
+#include <vector>
 
+#include "splitString.h"
 #include "Emulator.h"
 #include "FileLoader.h"
 #include <SDL2/SDL.h>
@@ -17,9 +19,124 @@ constexpr unsigned char getMemBit(unsigned char val,unsigned char pos){
 constexpr unsigned short calcVRAMPos(unsigned char x,unsigned char y){
     return y*64+x;
 }
+extern "C"{
+    static volatile sig_atomic_t interrupted = 0;
+    void handleSigInt(int signal){
+        interrupted=1;
+    }
+}
+int Emulator::runDebugCommand(std::string input){
+    std::vector<std::string> inputdata=splitString(input,' ',true);
+    if(inputdata.size()>0){
+        if(inputdata[0]=="step"){
+            int steps=1;
+            if(inputdata.size()<=2){
+                if(inputdata.size()==2){
+                    try{
+                        steps=stoi(inputdata[1]);
+                    }catch(...){
+                        std::cout<<"Invalid argument for step,\n usage: 'step [steps]'\n";
+                        return 0;
+                    }
+                }
+                for(int i=0;i<steps;i++){
+                    try{
+                        draw();
+                        runCycle();
+                    }catch(std::exception &e){
+                        std::string input;
+                        std::cout<<"Exception thrown: "<<e.what()<<"\n Continue?(Y/N)";
+                        std::getline(std::cin,input);
+                        if(input=="Y"||input=="y"){
+                            return 0;
+                        }else{
+                            throw;
+                        }
+                    }
+                }
+            }else{
+                std::cout<<"Too many arguments for step,\n usage: 'step [steps]'\n";
+            }
+        }else if(inputdata[0]=="exit"){
+            if(inputdata.size()==1){
+                return -1;
+            }else{
+                std::cout<<"Too many arguments for exit,\n usage: 'exit'\n";
+            }
+        }else if(inputdata[0]=="redraw"){
+            if(inputdata.size()==1){
+                draw();
+            }else{
+                std::cout<<"Too many arguments for redraw,\n usage: 'redraw'\n";
+            }
+        }else if(inputdata[0]=="run"){
+            if(inputdata.size()==1){
+                auto default_handler=signal(SIGINT,handleSigInt);
+                while(1){
+                    if(interrupted){
+                        interrupted=0;
+                        break;
+                    }
+                    try{
+                        draw();
+                        runCycle();
+                    }catch(std::exception &e){
+                        std::string input;
+                        std::cout<<"Exception thrown: "<<e.what()<<"\n Continue?(Y/N)";
+                        std::getline(std::cin,input);
+                        if(input=="Y"||input=="y"){
+                            return 0;
+                        }else{
+                            throw;
+                        }
+                    }
+                }
+                signal(SIGINT,default_handler);
+            }else{
+                std::cout<<"Too many arguments for run,\n usage: 'run'\n";
+            }
+        }else if(inputdata[0]=="clear"){
+            if(inputdata.size()==1){
+                system("cls");
+            }else{
+                std::cout<<"Too many arguments for clear,\n usage: 'clear'\n";
+            }
+        }else if(inputdata[0]=="help"){
+            if(inputdata.size()==1){
+                std::cout<<"--     Help     --\n     Commands\nclear\nexit\nstep\nrun\nredraw\n";
+            }else if(inputdata.size()==2){
+                if(inputdata[1]=="exit"){
+                    std::cout<<"--    Exit    --\n usage: 'exit'\n Exits debugging terminal\n";
+                }else if(inputdata[1]=="step"){
+                    std::cout<<"--    Step    --\n usage: 'step [steps]'\n Runs execution for 'steps' number of cycles, default 1\n";
+                }else if(inputdata[1]=="run"){
+                    std::cout<<"--    Run     --\n usage: 'run'\n Resumes execution, may be stopped with Ctrl-C\n";
+                }else if(inputdata[1]=="redraw"){
+                    std::cout<<"--   Redraw   --\n usage: 'redraw'\n Redraws screen\n";
+                }else if(inputdata[1]=="clear"){
+                    std::cout<<"--   Clear    --\n usage: 'clear'\n Clear terminal screen\n";
+                }else{
+                    std::cout<<"Invalid argument for help,\n usage: 'help [command]'\n";
+                }
+            }else{
+                std::cout<<"Too many arguments for help,\n usage: 'help [command]'\n";
+            }
+        }else{
+            std::cout<<"Unknown Command\n";
+        }
+    }
+    return 0;
+}
 
 void Emulator::initDebug(){
-    
+    while(1){
+        std::string input;
+        std::cout<<">";
+        std::getline(std::cin,input);
+        if(runDebugCommand(input)<0){
+            return;
+        }
+    }
 }
 
 void Emulator::draw(){
