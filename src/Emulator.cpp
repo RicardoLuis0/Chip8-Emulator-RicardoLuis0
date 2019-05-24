@@ -311,7 +311,7 @@ void Emulator::runCycle(){
         }
         break;
     case 0xF://X=operation.section2
-        switch(operation.high_byte){
+        switch(operation.section34){
         case 0x07://Set VX to the value of the delay timer
             V[operation.section2]=DT;
             break;

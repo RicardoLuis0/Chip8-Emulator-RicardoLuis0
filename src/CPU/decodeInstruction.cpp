@@ -76,7 +76,7 @@ operation_t CPU::decodeInstruction(RawInstruction operation){
         }
         break;
     case 0xF://MOV,KEY,ADD,FONT,STR,LDR
-        switch(operation.high_byte){
+        switch(operation.section34){
         case 0x07://MOV VX,DT
             return MOV_REG_DT;
         case 0x0A://KEY VX
