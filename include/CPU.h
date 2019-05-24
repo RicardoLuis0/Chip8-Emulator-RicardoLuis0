@@ -53,6 +53,7 @@ enum operation_t{
     MOV_ST,
     ADD,
     ADD_REG,
+    ADD_I,
     SUB,
     RSB,
     OR,
@@ -98,6 +99,7 @@ class CPU {
         void move_st(uint8_t X);//move ST to V[X]
         void add(uint8_t X,uint8_t value);//add value to V[X]
         void add_reg(uint8_t X,uint8_t Y);//add V[Y] to V[X]
+        void add_i(uint8_t X);//add V[X] to I
         void subtract(uint8_t X,uint8_t Y);//subtract V[Y] from V[X]
         void reverse_subtract(uint8_t X,uint8_t Y);//move V[Y]-V[X] to V[X]
         void or_operation(uint8_t X,uint8_t Y);//move V[X] | V[Y] to V[X]

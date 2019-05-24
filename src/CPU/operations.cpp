@@ -55,6 +55,9 @@ void CPU::add(uint8_t X,uint8_t value){//add value to V[X]
 void CPU::add_reg(uint8_t X,uint8_t Y){//add V[Y] to V[X]
     throw std::runtime_error("Unimplemented Operation");
 }
+void CPU::add_i(uint8_t X){//add V[X] to I
+    throw std::runtime_error("Unimplemented Operation");
+}
 void CPU::or_operation(uint8_t X,uint8_t Y){//move V[X] | V[Y] to V[X]
     throw std::runtime_error("Unimplemented Operation");
 }

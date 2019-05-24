@@ -61,6 +61,9 @@ void CPU::runInstruction(operation_t op,RawInstruction data){
     case ADD_REG:
         add_reg(data.section2,data.section3);
         break;
+    case ADD_I:
+        add_i(data.section2);
+        break;
     case OR:
         or_operation(data.section2,data.section3);
         break;
