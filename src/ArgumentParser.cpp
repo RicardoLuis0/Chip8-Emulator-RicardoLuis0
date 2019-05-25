@@ -30,5 +30,8 @@ Arguments ArgumentParser::parse(int argc,char ** argv){
             options["file"]=string(str);
         }
     }
+    if(reading_option){
+        options[option]="";
+    }
     return Arguments(options);
 }
