@@ -40,8 +40,10 @@ int main(int argc,char ** argv){
     }
     std::cout<<"Done.\n";
     if(args.hasOption("disassemble")){
+        std::cout<<"Opening Input File...";
         Program p=FileLoader::load(file,4096-0x200);
         std::vector<disassembled_instruction> asm_vec;
+        std::cout<<"Done.\nStarting Disassembly...";
         for(unsigned i=0;i<p.length;){
             uint8_t byte0=p.data[i++];
             if(i<p.length){
@@ -49,12 +51,19 @@ int main(int argc,char ** argv){
                 asm_vec.push_back(Disassembler::disassembleInstruction(byte0,byte1));
             }
         }
+        std::cout<<"Done.\nOpening Output File...";
         uint16_t location=0x200;
         std::ofstream f(splitString(file,{{'/',false},{'\\',false}}).back()+".c8asm");
+        if(!f){
+            std::cout<<"Error.\n Could not open file\n";
+            return 0;
+        }
+        std::cout<<"Done.\nWriting to Output File...";
         for(disassembled_instruction asm_ins:asm_vec){
             f<<asm_ins.getDisplay(location);
             location+=2;
         }
+        std::cout<<"Done.\n";
     }else if(args.hasOption("debug")){
         std::cout<<"Initializing Debugger...\n";
         Emulator emu;
