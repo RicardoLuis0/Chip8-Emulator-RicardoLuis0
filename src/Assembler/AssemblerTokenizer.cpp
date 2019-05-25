@@ -109,8 +109,8 @@ std::vector<AssemblerToken> tokenizeASM(const std::string &asm_str){
     char c;
     uint32_t i;
     for(i=0;i<asm_str.length()&&(c=asm_str[i]);i++){
-        if(c=='\n'||c==';'){
-            tryMatch();
+        if(c=='\n'||c==';'||c==' '||c=='\t'||c==','){
+            if(buffer!="")tryMatch();
             if(c==';')for(i=0;i<asm_str.length()&&(c=asm_str[i])!='\n';i++);
         }else if(partialMatch(buffer+c)||partialHexMatch(buffer+c)){
             buffer+=c;
