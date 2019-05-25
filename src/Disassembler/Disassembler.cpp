@@ -8,6 +8,9 @@ disassembled_instruction::disassembled_instruction(RawInstruction _data,std::str
 std::string disassembled_instruction::getDisplay(){
     return (valid?asm_str+";":";INVALID ")+getHex(data.whole,4)+"\n";
 }
+std::string disassembled_instruction::getDisplay(uint16_t location){
+    return (valid?asm_str+";":";INVALID ")+getHex(data.whole,4)+"@"+getHex(location,4)+"\n";
+}
 
 disassembled_instruction Disassembler::disassembleInstruction(uint8_t byte0,uint8_t byte1){
     return disassembleInstruction(RawInstruction(byte0,byte1));

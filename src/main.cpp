@@ -49,9 +49,11 @@ int main(int argc,char ** argv){
                 asm_vec.push_back(Disassembler::disassembleInstruction(byte0,byte1));
             }
         }
+        uint16_t location=0x200;
         std::ofstream file("output.c8asm");
         for(disassembled_instruction asm_ins:asm_vec){
-            file<<asm_ins.getDisplay();
+            file<<asm_ins.getDisplay(location);
+            location+=2;
         }
     }else if(args.hasOption("debug")){
         std::cout<<"Initializing Debugger...\n";
