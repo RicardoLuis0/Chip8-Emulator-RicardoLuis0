@@ -42,6 +42,8 @@
 		<Unit filename="include/ArgumentParser.h" />
 		<Unit filename="include/Arguments.h" />
 		<Unit filename="include/Assembler.h" />
+		<Unit filename="include/AssemblerToken.h" />
+		<Unit filename="include/AssemblerTokenizer.h" />
 		<Unit filename="include/CPU.h" />
 		<Unit filename="include/Console.h" />
 		<Unit filename="include/Debugger.h" />
@@ -55,6 +57,8 @@
 		<Unit filename="src/ArgumentParser.cpp" />
 		<Unit filename="src/Arguments.cpp" />
 		<Unit filename="src/Assembler/Assembler.cpp" />
+		<Unit filename="src/Assembler/AssemblerToken.cpp" />
+		<Unit filename="src/Assembler/AssemblerTokenizer.cpp" />
 		<Unit filename="src/CPU/CPU.cpp" />
 		<Unit filename="src/CPU/decodeInstruction.cpp" />
 		<Unit filename="src/CPU/operations.cpp" />
