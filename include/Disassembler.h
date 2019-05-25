@@ -10,9 +10,9 @@ struct disassembled_instruction{
     disassembled_instruction(RawInstruction _data,std::string asm_str);//valid constructor
     std::string getDisplay();
     std::string getDisplay(uint16_t location);
+    RawInstruction data;
     bool valid;
     std::string asm_str;
-    RawInstruction data;
 };
 
 class Disassembler {
