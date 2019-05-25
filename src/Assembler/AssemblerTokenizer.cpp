@@ -96,6 +96,7 @@ std::vector<std::vector<AssemblerToken>> tokenizeASM(const std::string &asm_str)
     std::vector<std::vector<AssemblerToken>> output;
     std::vector<AssemblerToken> line;
     std::string buffer="";
+    char c;
     auto tryMatch=[&](){
         if(fullMatch(buffer)){
             line.emplace_back(getMatch(buffer));
@@ -107,7 +108,6 @@ std::vector<std::vector<AssemblerToken>> tokenizeASM(const std::string &asm_str)
             throw std::runtime_error("no match for "+buffer);
         }
     };
-    char c;
     uint32_t i;
     for(i=0;i<asm_str.length()&&(c=asm_str[i]);i++){
         if(c==','){//flush buffer, add comma token
@@ -129,7 +129,7 @@ std::vector<std::vector<AssemblerToken>> tokenizeASM(const std::string &asm_str)
     if(buffer!=""){
         tryMatch();
     }
-    if(line.length()>0){
+    if(line.size()>0){
         output.push_back(line);
     }
     return output;
