@@ -50,6 +50,7 @@ enum AssemblerTokenType_t{
         VF,
     REGISTERS_END,
     LITERAL,
+    COMMA,
 };
 
 struct AssemblerToken {

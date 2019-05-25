@@ -92,16 +92,17 @@ AssemblerTokenType_t getMatch(std::string buffer){//throws on invalid buffer
     throw std::runtime_error("no match for "+buffer);
 }
 
-std::vector<AssemblerToken> tokenizeASM(const std::string &asm_str){
-    std::vector<AssemblerToken> output;
+std::vector<std::vector<AssemblerToken>> tokenizeASM(const std::string &asm_str){
+    std::vector<std::vector<AssemblerToken>> output;
+    std::vector<AssemblerToken> line;
     std::string buffer="";
     auto tryMatch=[&](){
         if(fullMatch(buffer)){
-            output.emplace_back(getMatch(buffer));
-            buffer="";
+            line.emplace_back(getMatch(buffer));
+            buffer=c;
         }else if(fullHexMatch(buffer)){
-            output.emplace_back(getHexMatch(buffer));
-            buffer="";
+            line.emplace_back(getHexMatch(buffer));
+            buffer=c;
         }else{
             throw std::runtime_error("no match for "+buffer);
         }
@@ -109,17 +110,27 @@ std::vector<AssemblerToken> tokenizeASM(const std::string &asm_str){
     char c;
     uint32_t i;
     for(i=0;i<asm_str.length()&&(c=asm_str[i]);i++){
-        if(c=='\n'||c==';'||c==' '||c=='\t'||c==','){
+        if(c==','){//flush buffer, add comma token
+            if(buffer!="")tryMatch();
+            line.emplace_back(COMMA);
+        }else if(c==' '||c=='\t'){//skip whitespace, flush buffer
+            if(buffer!="")tryMatch();
+        }else if(c=='\n'||c==';'){//advance a line
             if(buffer!="")tryMatch();
             if(c==';')for(i=0;i<asm_str.length()&&(c=asm_str[i])!='\n';i++);
-        }else if(partialMatch(buffer+c)||partialHexMatch(buffer+c)){
+            output.push_back(line);
+            line.clear();
+        }else if(partialMatch(buffer+c)||partialHexMatch(buffer+c)){//check for possible tokens
             buffer+=c;
-        }else{
+        }else{//flush buffer
             tryMatch();
         }
     }
     if(buffer!=""){
         tryMatch();
+    }
+    if(line.length()>0){
+        output.push_back(line);
     }
     return output;
 }
