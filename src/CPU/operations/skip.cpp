@@ -18,9 +18,9 @@ void CPU::skip_if_not_eq_reg(uint8_t X,uint8_t Y){//skip next instruction if V[X
 }
 
 void CPU::skip_key(uint8_t X){//skip next instruction if the key at V[X] is currently pressed
-    if(V[X]<16&&KB[V[X]])PC+=2;
+    if(KB[V[X]])PC+=2;
 }
 
 void CPU::skip_not_key(uint8_t X){//skip next instruction if the key at V[X] is currently NOT pressed
-    if(V[X]<16&&!KB[V[X]])PC+=2;
+    if(!KB[V[X]])PC+=2;
 }
