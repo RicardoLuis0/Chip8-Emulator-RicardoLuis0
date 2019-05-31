@@ -61,6 +61,8 @@
 		<Unit filename="src/Assembler/AssemblerTokenizer.cpp" />
 		<Unit filename="src/CPU/CPU.cpp" />
 		<Unit filename="src/CPU/decodeInstruction.cpp" />
+		<Unit filename="src/CPU/doCycle.cpp" />
+		<Unit filename="src/CPU/nextInstruction.cpp" />
 		<Unit filename="src/CPU/operations/arithmetic.cpp" />
 		<Unit filename="src/CPU/operations/bitwise_operations.cpp" />
 		<Unit filename="src/CPU/operations/draw_clear.cpp" />
