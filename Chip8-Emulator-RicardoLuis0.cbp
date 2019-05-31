@@ -52,6 +52,7 @@
 		<Unit filename="include/FileLoader.h" />
 		<Unit filename="include/Program.h" />
 		<Unit filename="include/RawInstruction.h" />
+		<Unit filename="include/SDLHandler.h" />
 		<Unit filename="include/getHex.h" />
 		<Unit filename="include/splitString.h" />
 		<Unit filename="src/ArgumentParser.cpp" />
@@ -62,6 +63,7 @@
 		<Unit filename="src/CPU/CPU.cpp" />
 		<Unit filename="src/CPU/decodeInstruction.cpp" />
 		<Unit filename="src/CPU/doCycle.cpp" />
+		<Unit filename="src/CPU/fonts.cpp" />
 		<Unit filename="src/CPU/nextInstruction.cpp" />
 		<Unit filename="src/CPU/operations/arithmetic.cpp" />
 		<Unit filename="src/CPU/operations/bitwise_operations.cpp" />
@@ -80,6 +82,7 @@
 		<Unit filename="src/FileLoader.cpp" />
 		<Unit filename="src/Program.cpp" />
 		<Unit filename="src/RawInstruction.cpp" />
+		<Unit filename="src/SDLHandler.cpp" />
 		<Unit filename="src/getHex.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/splitString.cpp" />

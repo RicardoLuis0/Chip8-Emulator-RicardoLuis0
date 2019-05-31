@@ -73,12 +73,18 @@ enum operation_t{
 class CPU {
     public:
         cpu_state get_cpu_state();//for debugger/interactive disassembler
+        bool makeSound();//if it needs to make a sound
         void keyPressed(uint8_t key);
         void keyReleased(uint8_t key);
         void doCycle();
         std::array<uint8_t,2048> getVRAMData();//for window drawer
         static operation_t decodeInstruction(RawInstruction operation);
+        void loadProgram(std::string filepath);
     protected:
+        void clearRAM();
+        void clearVRAM();
+        void clearRegisters();
+        void loadFonts(const uint8_t fonts[16][5],uint16_t load_address=0x0);
         RawInstruction nextInstruction();
         void runInstruction(operation_t op,RawInstruction data);
         //operations
@@ -118,6 +124,7 @@ class CPU {
         void store(uint8_t X);//store the values of V[0]~V[X] to memory starting at I
         void load(uint8_t X);//load the values of V[0]~V[X] from memory starting at I
         //internal
+        static const uint8_t fontset[16][5];
         uint16_t font_addr[16]={0};
         bool waiting_for_input=false;
         uint8_t input_to=0;
