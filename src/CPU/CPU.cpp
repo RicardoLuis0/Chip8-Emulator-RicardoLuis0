@@ -1,4 +1,6 @@
 #include "CPU.h"
+#include <algorithm>
+
 cpu_state::cpu_state(
     const uint16_t (&_font_addr)[16],
     const uint8_t (&_RAM)[4096],
@@ -15,6 +17,12 @@ cpu_state::cpu_state(
 
 CPU::CPU(){
     
+}
+
+std::array<uint8_t,2048> CPU::getVRAMData(){
+    std::array<uint8_t,2048> temp;
+    std::copy_n(std::begin(VRAM),2048,temp.begin());
+    return temp;
 }
 
 cpu_state CPU::get_cpu_state(){

@@ -2,6 +2,7 @@
 #define CPU_H
 
 #include <cstdint>
+#include <array>
 #include "RawInstruction.h"
 struct cpu_state{
     cpu_state(
@@ -72,8 +73,9 @@ enum operation_t{
 class CPU {
     public:
         CPU();
-        cpu_state get_cpu_state();
+        cpu_state get_cpu_state();//for debugger/interactive disassembler
         void nextInstruction();
+        std::array<uint8_t,2048> getVRAMData();//for window drawer
         static operation_t decodeInstruction(RawInstruction operation);
     protected:
         void runInstruction(operation_t op,RawInstruction data);
