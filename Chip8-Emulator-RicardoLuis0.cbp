@@ -61,7 +61,15 @@
 		<Unit filename="src/Assembler/AssemblerTokenizer.cpp" />
 		<Unit filename="src/CPU/CPU.cpp" />
 		<Unit filename="src/CPU/decodeInstruction.cpp" />
-		<Unit filename="src/CPU/operations.cpp" />
+		<Unit filename="src/CPU/operations/arithmetic.cpp" />
+		<Unit filename="src/CPU/operations/bitwise_operations.cpp" />
+		<Unit filename="src/CPU/operations/draw_clear.cpp" />
+		<Unit filename="src/CPU/operations/jump_call_return.cpp" />
+		<Unit filename="src/CPU/operations/memory.cpp" />
+		<Unit filename="src/CPU/operations/misc.cpp" />
+		<Unit filename="src/CPU/operations/move.cpp" />
+		<Unit filename="src/CPU/operations/read_key.cpp" />
+		<Unit filename="src/CPU/operations/skip.cpp" />
 		<Unit filename="src/CPU/runInstruction.cpp" />
 		<Unit filename="src/Console.cpp" />
 		<Unit filename="src/Debugger/Debugger.cpp" />
