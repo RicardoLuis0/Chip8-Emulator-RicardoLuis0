@@ -2,9 +2,9 @@
 #include <stdexcept>
 
 void CPU::sys_call(uint16_t address){//call system procedure at address
-    throw std::runtime_error("Unimplemented Operation");
+    return;//Do nothing on this
 }
 
 void CPU::random(uint8_t X,uint8_t mask){//move random number & mask to V[X]
-    throw std::runtime_error("Unimplemented Operation");
+    V[X]=rand()&mask;
 }
