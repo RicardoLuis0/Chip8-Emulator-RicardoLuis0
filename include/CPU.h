@@ -72,12 +72,14 @@ enum operation_t{
 
 class CPU {
     public:
-        CPU();
         cpu_state get_cpu_state();//for debugger/interactive disassembler
-        void nextInstruction();
+        void keyPressed(uint8_t key);
+        void keyReleased(uint8_t key);
+        void doCycle();
         std::array<uint8_t,2048> getVRAMData();//for window drawer
         static operation_t decodeInstruction(RawInstruction operation);
     protected:
+        RawInstruction nextInstruction();
         void runInstruction(operation_t op,RawInstruction data);
         //operations
         void sys_call(uint16_t address);//call system procedure at address
@@ -115,8 +117,11 @@ class CPU {
         void binary_coded_decimal(uint8_t X);//store the binary coded decimal value of V[X] at I,I+1,I+2
         void store(uint8_t X);//store the values of V[0]~V[X] to memory starting at I
         void load(uint8_t X);//load the values of V[0]~V[X] from memory starting at I
-        //data
+        //internal
         uint16_t font_addr[16]={0};
+        bool waiting_for_input=false;
+        uint8_t input_to=0;
+        //data
         uint8_t RAM[4096]={0};//program memory
         uint8_t VRAM[2048]={0};//video memory
         uint8_t KB[16]={0};//keyboard state
