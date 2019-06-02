@@ -2,7 +2,7 @@
 
 #include "SDL2/SDL.h"
 
-#define VRAMPOS(x,y) (y*64+x)
+#define VRAMPOS(x,y) (y*32+x)
 
 SDLHandler::SDLHandler(){
     SDL_CreateWindowAndRenderer(640,320,0,&window,&renderer);
