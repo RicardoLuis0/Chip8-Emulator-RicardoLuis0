@@ -3,7 +3,6 @@
 #include <stdexcept>
 
 void CPU::runInstruction(operation_t op,RawInstruction data){
-
     switch(op){
     case INVALID_OPERATION:
         throw std::runtime_error("Invalid Operation: "+getHex(data.whole,4)+"\n");

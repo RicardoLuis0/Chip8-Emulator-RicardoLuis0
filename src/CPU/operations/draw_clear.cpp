@@ -4,7 +4,7 @@
 
 #define VRAMPOS(x,y) (y*64+x)
 
-#define GETBIT(v,b) ((v<<b)&0x1)
+#define GETBIT(v,b) ((v>>b)&0x1)
 
 void CPU::clear_screen(){//clear screen
     memset(VRAM,0,sizeof(VRAM));
