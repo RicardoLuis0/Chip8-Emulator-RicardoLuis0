@@ -11,6 +11,7 @@
 #include "FileLoader.h"
 #include "splitString.h"
 #include "Disassembler.h"
+#include "SDLHandler.h"
 
 int main(int argc,char ** argv){
     std::cout<<"Chip8 Emulator\nby RicardoLuis0\n\nCreating Console Object...";
@@ -66,30 +67,23 @@ int main(int argc,char ** argv){
         std::cout<<"Done.\n";
     }else if(args.hasOption("debug")){
         std::cout<<"Initializing Debugger...\n";
-        Emulator emu;
-        con.moveCursor(24,10);
-        std::cout<<"Done.";
-        con.moveCursor(0,13);
-        std::cout<<"Loading ROM...";
-        emu.loadProgramFile(file);
-        std::cout<<"Done.\nStarting Debugging...\n\n\n";
-        emu.initDebug();
+        throw std::runtime_error("Debugging not Implemented yet");
     }else{
-        std::cout<<"Initializing Emulator...\n";
-        Emulator emu;
-        con.moveCursor(24,10);
-        std::cout<<"Done.";
-        con.moveCursor(0,13);
-        std::cout<<"Loading ROM...";
-        emu.loadProgramFile(file);
-        std::cout<<"Done.\nStarting Emulation...\n\n\n";
+        std::cout<<"Initializing Chip8 CPU...\n";
+        CPU cpu;
+        std::cout<<"Done.\nInitializing SDL Handler (IO)...";
+        SDLHandler display;
+        std::cout<<"Done.\nLoading ROM...";
+        cpu.loadProgram(file);
+        std::cout<<"Done.\nStarting Emulation.\n";
         while(1){
             try{
-                emu.draw();
-                emu.runCycle();
+                if(display.update(cpu)){
+                    break;
+                }
+                cpu.doCycle();
             }catch(...){
                 SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Exeption Thrown","An Exeption was Thrown by the Emulator, Aborting execution.",0);
-                SDL_Quit();
                 throw;
             }
         }
