@@ -11,7 +11,6 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-disassemble" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
@@ -53,6 +52,7 @@
 		<Unit filename="include/Program.h" />
 		<Unit filename="include/RawInstruction.h" />
 		<Unit filename="include/SDLHandler.h" />
+		<Unit filename="include/SDLHandlerDebug.h" />
 		<Unit filename="include/getHex.h" />
 		<Unit filename="include/splitString.h" />
 		<Unit filename="src/ArgumentParser.cpp" />
@@ -83,6 +83,7 @@
 		<Unit filename="src/Program.cpp" />
 		<Unit filename="src/RawInstruction.cpp" />
 		<Unit filename="src/SDLHandler.cpp" />
+		<Unit filename="src/SDLHandlerDebug.cpp" />
 		<Unit filename="src/getHex.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/splitString.cpp" />
