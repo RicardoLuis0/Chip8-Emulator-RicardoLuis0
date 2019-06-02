@@ -6,12 +6,14 @@
 class SDLHandler {
     public:
         SDLHandler();
-        void update(CPU &cpu);
+        bool update(CPU &cpu);
         virtual ~SDLHandler();
     protected:
+        void drawScreen(CPU &cpu);
+        bool pollEvents(CPU &cpu);
+        bool handleEvent(CPU &cpu,union SDL_Event * e);
         struct SDL_Renderer * renderer;
         struct SDL_Window * window;
-
     private:
 };
 

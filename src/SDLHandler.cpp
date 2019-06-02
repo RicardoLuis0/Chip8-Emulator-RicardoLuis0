@@ -14,7 +14,12 @@ SDLHandler::~SDLHandler(){
     SDL_DestroyWindow(window);
 }
 
-void SDLHandler::update(CPU &cpu){
+bool SDLHandler::update(CPU &cpu){
+    drawScreen(cpu);
+    return pollEvents(cpu);
+}
+
+void SDLHandler::drawScreen(CPU &cpu){
     std::array<uint8_t,2048> data = cpu.getVRAMData();
     SDL_SetRenderDrawColor(renderer,0,0,0,255);
     SDL_RenderClear(renderer);
@@ -30,4 +35,24 @@ void SDLHandler::update(CPU &cpu){
         }
     }
     SDL_RenderPresent(renderer);
+}
+
+bool SDLHandler::pollEvents(CPU &cpu){
+    bool doQuit=false;
+    for(SDL_Event e;SDL_PollEvent(&e);){
+        if(handleEvent(cpu,&e)){
+            doQuit=true;
+        }
+    }
+    return doQuit;
+}
+
+bool SDLHandler::handleEvent(CPU &cpu,union SDL_Event * e){
+    switch(e->type){
+    case SDL_QUIT:
+        return true;
+    default:
+        break;
+    }
+    return false;
 }
