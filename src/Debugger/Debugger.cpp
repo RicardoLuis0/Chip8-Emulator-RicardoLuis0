@@ -76,9 +76,15 @@ debug_command Debugger::parseCommand(std::string str){
     }catch(UnclosedStringException &e){
         return {CMD_INVALID,{str,"Unclosed quoted string"}};
     }
-    
-    
-    
+    if(args.size()>0){
+        if(command_map.find(args[0])!=command_map.end()){
+            return {command_map[args[0]],args};
+        }else{
+            return {CMD_INVALID,{str,args[0]+" is not a valid command"}};
+        }
+    }else{
+        return {CMD_INVALID,{str,"command must not be empty"}};
+    }
     return {CMD_INVALID,{str,"unknown error parsing command"}};
 }
 
