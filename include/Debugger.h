@@ -1,8 +1,6 @@
 #ifndef DEBUGGER_H
 #define DEBUGGER_H
 
-#include <atomic>
-#include <mutex>
 #include <vector>
 
 #include "CPU.h"
@@ -25,15 +23,9 @@ class Debugger {
         //commands
         void exitDebug();
         //misc
-        void readCommandThread();
         debug_command parseCommand(std::string str);
         CPU cpu;
         SDLHandlerDebug sdlhandler;
-        debug_command last_command;
-        std::atomic<bool> run_thread;
-        std::atomic<bool> is_command_pending;
-        std::mutex command_mutex;
-        friend void thread_entrypoint(Debugger * data);
     private:
 };
 

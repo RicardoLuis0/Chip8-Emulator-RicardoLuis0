@@ -37,6 +37,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lmingw32 -lSDL2main -lSDL2" />
+			<Add option="-lpdcurses" />
 		</Linker>
 		<Unit filename="include/ArgumentParser.h" />
 		<Unit filename="include/Arguments.h" />

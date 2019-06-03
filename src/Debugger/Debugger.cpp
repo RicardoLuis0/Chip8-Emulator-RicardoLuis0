@@ -1,5 +1,4 @@
 #include "Debugger.h"
-#include <thread>
 #include <iostream>
 #include <stdexcept>
 #include <map>
@@ -45,24 +44,8 @@ static std::vector<std::string> splitCommand(std::string s){
     return temp;
 }
 
-void thread_entrypoint(Debugger * data){
-    data->run_thread=true;
-    data->readCommandThread();
-}
-
-void Debugger::readCommandThread(){
-    while(run_thread){
-        if(!is_command_pending&&run_thread){
-            std::lock_guard<std::mutex> lock(command_mutex);
-            std::string buffer;
-            std::getline(std::cin,buffer);
-            last_command=parseCommand(buffer);
-            is_command_pending=true;
-        }
-    }
-}
-
 Debugger::Debugger(){
+    
 }
 
 static std::map<std::string,debug_command_enum> command_map{
@@ -89,8 +72,11 @@ debug_command Debugger::parseCommand(std::string str){
 }
 
 void Debugger::startDebug(){
-    std::thread commandReader(thread_entrypoint,this);
+    debug_command command;
+    std::string buffer;
     while(1){
-        
+        //getch with timeout
+        //if char is /n, try to parse command, else add char to buffer and print it out
+        command=parseCommand(buffer);
     }
 }
