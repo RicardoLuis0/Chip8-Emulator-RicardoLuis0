@@ -18,7 +18,13 @@
 std::string getline_curs(){
     char c;
     std::string buffer;
-    while((c=getch())!='\n')buffer+=c;
+    while((c=getch())!='\n'){
+        if(c=='\b'){
+            buffer.resize(buffer.length()-1);
+        }else{
+            buffer+=c;
+        }
+    }
     return buffer;
 }
 
