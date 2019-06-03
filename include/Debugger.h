@@ -23,6 +23,7 @@ class Debugger {
         //commands
         void exitDebug();
         //misc
+        static std::vector<std::string> splitCommand(std::string s);
         debug_command parseCommand(std::string str);
         CPU cpu;
         SDLHandlerDebug sdlhandler;

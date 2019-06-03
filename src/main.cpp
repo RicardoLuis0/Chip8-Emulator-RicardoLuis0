@@ -6,40 +6,56 @@
 
 #include <SDL2/SDL.h>
 #include "ArgumentParser.h"
-#include "Console.h"
 #include "Emulator.h"
 #include "FileLoader.h"
 #include "splitString.h"
 #include "Disassembler.h"
 #include "SDLHandler.h"
 
+#include <curses.h>
+#include "QuitException.h"
+
+std::string getline_curs(){
+    char c;
+    std::string buffer;
+    while((c=getch())!='\n')buffer+=c;
+    return buffer;
+}
+
 int main(int argc,char ** argv){
-    std::cout<<"Chip8 Emulator\nby RicardoLuis0\n\nCreating Console Object...";
-    Console con;
-    std::cout<<"Done.\nParsing Arguments...";
+    initscr();
+    printw("Chip8 Emulator\nby RicardoLuis0\n\nParsing Arguments...");
+    refresh();
     Arguments args=ArgumentParser::parse(argc,argv);
     std::string file;
     //read file option
     if(args.hasOption("file")){
         file=args.getOption("file");
-        std::cout<<"Done.\n";
+        printw("Done.\n");
+        refresh();
     }else{
-        std::cout<<"Error\n >Missing required parameter \"-file\"\n";
-        std::cout<<"Getting file parameter input from user...\n";
-        std::cout<<" >Please Enter file to load:";
-        std::getline(std::cin,file);
-        con.moveCursor(41,6);
-        std::cout<<"Done.";
-        con.moveCursor(0,8);
+        printw("Error\n >Missing required parameter \"-file\"\n");
+        printw("Getting file parameter input from user...");
+        int sv1_x,sv1_y,sv2_x,sv2_y;
+        getyx(stdscr,sv1_y,sv1_x);
+        printw("\n >Please Enter file to load:");
+        file=getline_curs();
+        refresh();
+        getyx(stdscr,sv2_y,sv2_x);
+        mvprintw(sv1_y,sv1_x,"Done.");
+        move(sv2_y,sv2_x);
+        refresh();
     }
     std::cout<<"Seeding random number generator...";
     srand(time(NULL));
     std::cout<<"Done.\nInitializing SDL2...";
     if(SDL_Init(SDL_INIT_VIDEO)!=0){
         std::cout<<"Error.\n >Error while Initializing SDL: "<<SDL_GetError()<<"\n";
+        endwin();
         return 0;
     }
     std::cout<<"Done.\n";
+    try{
     if(args.hasOption("disassemble")){
         std::cout<<"Opening Input File...";
         Program p=FileLoader::load(file,4096-0x200);
@@ -57,7 +73,7 @@ int main(int argc,char ** argv){
         std::ofstream f(splitString(file,{{'/',false},{'\\',false}}).back()+".c8asm");
         if(!f){
             std::cout<<"Error.\n Could not open file\n";
-            return 0;
+            throw QuitException(1);
         }
         std::cout<<"Done.\nWriting to Output File...";
         for(disassembled_instruction asm_ins:asm_vec){
@@ -82,12 +98,24 @@ int main(int argc,char ** argv){
                     break;
                 }
                 cpu.doCycle();
+            }catch(QuitException &e){
+                throw;
             }catch(...){
                 SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,"Exeption Thrown","An Exeption was Thrown by the Emulator, Aborting execution.",0);
                 throw;
             }
         }
     }
+    }catch(QuitException &e){
+        SDL_Quit();
+        endwin();
+        return e.getEndCode();
+    }catch(...){
+        SDL_Quit();
+        endwin();
+        throw;
+    }
     SDL_Quit();
+    endwin();
     return 0;
 }

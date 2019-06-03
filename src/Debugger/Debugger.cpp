@@ -1,14 +1,15 @@
 #include "Debugger.h"
-#include <iostream>
 #include <stdexcept>
 #include <map>
+
+#include <curses.h>
 
 class UnclosedStringException:std::runtime_error{
     public:
         UnclosedStringException():runtime_error("Unclosed String In splitCommand"){}
 };
 
-static std::vector<std::string> splitCommand(std::string s){
+std::vector<std::string> Debugger::splitCommand(std::string s){
     std::vector<std::string> temp;
     std::string buffer;
     bool reading_string=false;
@@ -70,13 +71,28 @@ debug_command Debugger::parseCommand(std::string str){
     }
     return {CMD_INVALID,{str,"unknown error parsing command"}};
 }
-
+static clearline(){
+    int y,x;
+    getyx(stdscr,y,x);
+    move(y,0);
+    clrtoeol();
+}
 void Debugger::startDebug(){
+    timeout(10);
     debug_command command;
     std::string buffer;
     while(1){
         //getch with timeout
-        //if char is /n, try to parse command, else add char to buffer and print it out
-        command=parseCommand(buffer);
+        char c=getch();
+        if(c!=-1){
+            //if char is /n, try to parse command, else add char to buffer and print it out
+            if(c=='\n'){
+                clearline();
+                command=parseCommand(buffer);
+                buffer="";
+            }else{
+                buffer+=c;
+            }
+        }
     }
 }
