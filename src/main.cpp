@@ -21,7 +21,10 @@ std::string getline_curs(){
     std::string buffer;
     while((c=getch())!='\n'){
         if(c=='\b'){
-            buffer.resize(buffer.length()-1);
+            if(buffer.length()>0){
+                buffer.resize(buffer.length()-1);
+                clrtoeol();
+            }
         }else{
             buffer+=c;
         }
@@ -40,7 +43,7 @@ int main(int argc,char ** argv){
         file=args.getOption("file");
         printw("Done.\n");
         refresh();
-    }else{
+    }else if(!args.hasOption("debug")){
         printw("Error\n >Missing required parameter \"-file\"\n");
         printw("Getting file parameter input from user...");
         int sv1_x,sv1_y,sv2_x,sv2_y;

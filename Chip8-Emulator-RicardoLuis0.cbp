@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-debug" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
@@ -78,6 +79,8 @@
 		<Unit filename="src/CPU/runInstruction.cpp" />
 		<Unit filename="src/Debugger/Debugger.cpp" />
 		<Unit filename="src/Debugger/commands/exit.cpp" />
+		<Unit filename="src/Debugger/commands/help.cpp" />
+		<Unit filename="src/Debugger/runCommand.cpp" />
 		<Unit filename="src/Disassembler/Disassembler.cpp" />
 		<Unit filename="src/Emulator.cpp" />
 		<Unit filename="src/FileLoader.cpp" />
