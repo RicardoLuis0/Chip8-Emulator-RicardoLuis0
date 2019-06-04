@@ -10,7 +10,10 @@ void Debugger::startDebug(){
     printw("Debugging Started\n\n>");
     debug_command cmd;
     std::string buffer;
-    CPU cpu;
+    cpu.clearRAM();
+    cpu.clearVRAM();
+    cpu.clearRegisters();
+    running=false;
     while(1){
         //getch with timeout
         char c=getch();
@@ -30,6 +33,11 @@ void Debugger::startDebug(){
                 buffer+=c;
             }
         }
-        sdlhandler.pollEvents(cpu);
+        if(running){
+            sdlhandler.update(cpu);
+            cpu.doCycle();
+        }else{
+            sdlhandler.pollEvents(cpu);
+        }
     }
 }

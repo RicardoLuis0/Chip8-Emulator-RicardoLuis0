@@ -3,6 +3,11 @@
 std::map<std::string,debug_command_enum> Debugger::command_map{
     {"exit",CMD_EXIT},
     {"help",CMD_HELP},
+    {"load",CMD_LOAD},
+    {"start",CMD_START},
+    {"stop",CMD_STOP},
+    {"step",CMD_STEP},
+    {"clear",CMD_CLEAR},
 };
 
 debug_command Debugger::parseCommand(std::string str){

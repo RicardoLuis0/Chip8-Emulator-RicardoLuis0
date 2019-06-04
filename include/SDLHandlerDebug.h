@@ -3,7 +3,7 @@
 
 #include "SDLHandler.h"
 
-class SDLHandlerDebug : SDLHandler{
+class SDLHandlerDebug : public SDLHandler{
     public:
         using SDLHandler::drawScreen;
         using SDLHandler::pollEvents;

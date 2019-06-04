@@ -4,32 +4,6 @@
 #include <cstdint>
 #include <array>
 #include "RawInstruction.h"
-struct cpu_state{
-    cpu_state(
-        const uint16_t (&font_addr)[16],
-        const uint8_t (&RAM)[4096],
-        const uint8_t (&VRAM)[2048],
-        const uint8_t (&KB)[16],
-        const uint8_t &DT,
-        const uint8_t &ST,
-        const uint16_t &I,
-        const uint16_t &PC,
-        const uint16_t (&stack)[24],
-        const uint16_t &SP,
-        const uint8_t (&V)[16]
-    );
-    const uint16_t (&font_addr)[16];
-    const uint8_t (&RAM)[4096];
-    const uint8_t (&VRAM)[2048];
-    const uint8_t (&KB)[16];
-    const uint8_t &DT;
-    const uint8_t &ST;
-    const uint16_t &I;
-    const uint16_t &PC;
-    const uint16_t (&stack)[24];
-    const uint16_t &SP;
-    const uint8_t (&V)[16];
-};
 
 enum operation_t{
     INVALID_OPERATION,
@@ -72,7 +46,6 @@ enum operation_t{
 
 class CPU {
     public:
-        cpu_state get_cpu_state();//for debugger/interactive disassembler
         bool makeSound();//if it needs to make a sound
         void keyPressed(uint8_t key);
         void keyReleased(uint8_t key);
@@ -80,6 +53,7 @@ class CPU {
         std::array<uint8_t,2048> getVRAMData();//for window drawer
         static operation_t decodeInstruction(RawInstruction operation);
         void loadProgram(std::string filepath);
+        friend class Debugger;
     protected:
         void clearRAM();
         void clearVRAM();

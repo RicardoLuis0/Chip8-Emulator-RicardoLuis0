@@ -17,12 +17,16 @@ std::vector<std::string> Debugger::splitCommand(std::string s){
                     reading_escape=true;
                 }else if(c=='"'){
                     temp.push_back(buffer);
+                    buffer="";
                     reading_string=false;
+                }else{
+                    buffer+=c;
                 }
             }
         }else{
             if(c==' '||c=='"'){
                 if(buffer.length()>0)temp.push_back(buffer);
+                buffer="";
                 if(c=='"'){
                     reading_string=true;
                     reading_escape=false;

@@ -34,7 +34,9 @@ std::string getline_curs(){
 
 int main(int argc,char ** argv){
     initscr();
-    printw("Chip8 Emulator\nby RicardoLuis0\n\nParsing Arguments...");
+    printw("Chip8 Emulator\nby RicardoLuis0\n\nSeeding random number generator...");
+    srand(time(NULL));
+    printw("Done\nParsing Arguments...");
     refresh();
     Arguments args=ArgumentParser::parse(argc,argv);
     std::string file;
@@ -55,10 +57,10 @@ int main(int argc,char ** argv){
         mvprintw(sv1_y,sv1_x,"Done.");
         move(sv2_y,sv2_x);
         refresh();
+    }else{
+        printw("Done.\n");
     }
-    printw("Seeding random number generator...");
-    srand(time(NULL));
-    printw("Done.\nInitializing SDL2...");
+    printw("Initializing SDL2...");
     if(SDL_Init(SDL_INIT_VIDEO)!=0){
         printw("Error.\n >Error while Initializing SDL: %s\n",SDL_GetError());
         endwin();
@@ -92,8 +94,9 @@ int main(int argc,char ** argv){
             }
             printw("Done.\n");
         }else if(args.hasOption("debug")){
-            printw("Initializing Debugger...\n");
+            printw("Initializing Debugger...");
             Debugger debugger;
+            printw("Done.\n");
             debugger.startDebug();
         }else{
             printw("Initializing Chip8 CPU...\n");

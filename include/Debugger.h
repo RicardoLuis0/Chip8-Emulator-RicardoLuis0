@@ -11,6 +11,11 @@ enum debug_command_enum{
     CMD_INVALID,//if invalid, first param is the whole string, second param is the error message
     CMD_EXIT,
     CMD_HELP,
+    CMD_LOAD,
+    CMD_START,
+    CMD_STOP,
+    CMD_STEP,
+    CMD_CLEAR,
 };
 
 struct debug_command{
@@ -32,7 +37,13 @@ class Debugger {
         void runCommand(debug_command cmd);
         void command_exit(std::vector<std::string> args);
         void command_help(std::vector<std::string> args);
+        void command_load(std::vector<std::string> args);
+        void command_start(std::vector<std::string> args);
+        void command_stop(std::vector<std::string> args);
+        void command_step(std::vector<std::string> args);
+        void command_clear(std::vector<std::string> args);
         //misc
+        bool running;
         static std::vector<std::string> splitCommand(std::string s);
         debug_command parseCommand(std::string str);
         CPU cpu;

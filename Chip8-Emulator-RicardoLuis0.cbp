@@ -78,8 +78,13 @@
 		<Unit filename="src/CPU/operations/skip.cpp" />
 		<Unit filename="src/CPU/runInstruction.cpp" />
 		<Unit filename="src/Debugger/Debugger.cpp" />
+		<Unit filename="src/Debugger/commands/clear.cpp" />
 		<Unit filename="src/Debugger/commands/exit.cpp" />
 		<Unit filename="src/Debugger/commands/help.cpp" />
+		<Unit filename="src/Debugger/commands/load.cpp" />
+		<Unit filename="src/Debugger/commands/start.cpp" />
+		<Unit filename="src/Debugger/commands/step.cpp" />
+		<Unit filename="src/Debugger/commands/stop.cpp" />
 		<Unit filename="src/Debugger/parseCommand.cpp" />
 		<Unit filename="src/Debugger/runCommand.cpp" />
 		<Unit filename="src/Debugger/splitCommand.cpp" />
