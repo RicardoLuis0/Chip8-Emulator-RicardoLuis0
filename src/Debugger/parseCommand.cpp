@@ -1,0 +1,25 @@
+#include "Debugger.h"
+
+std::map<std::string,debug_command_enum> Debugger::command_map{
+    {"exit",CMD_EXIT},
+    {"help",CMD_HELP},
+};
+
+debug_command Debugger::parseCommand(std::string str){
+    std::vector<std::string> args;
+    try{
+        args=splitCommand(str);
+    }catch(UnclosedStringException &e){
+        return {CMD_INVALID,{str,"Unclosed quoted string"}};
+    }
+    if(args.size()>0){
+        if(command_map.find(args[0])!=command_map.end()){
+            return {command_map[args[0]],args};
+        }else{
+            return {CMD_INVALID,{str,"'"+str+"' is not a valid command"}};
+        }
+    }else{
+        return {CMD_INVALID,{str,"command must not be empty"}};
+    }
+    return {CMD_INVALID,{str,"unknown error parsing command"}};
+}

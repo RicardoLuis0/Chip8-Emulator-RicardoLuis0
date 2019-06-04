@@ -1,11 +1,7 @@
 #include "Debugger.h"
-#include <stdexcept>
 #include <curses.h>
 
-class UnclosedStringException:std::runtime_error{
-    public:
-        UnclosedStringException():runtime_error("Unclosed String In splitCommand"){}
-};
+Debugger::UnclosedStringException::UnclosedStringException():runtime_error("Unclosed String In splitCommand"){}
 
 std::vector<std::string> Debugger::splitCommand(std::string s){
     std::vector<std::string> temp;
@@ -50,46 +46,7 @@ Debugger::Debugger(){
     
 }
 
-std::map<std::string,debug_command_enum> Debugger::command_map{
-    {"exit",CMD_EXIT},
-    {"help",CMD_HELP},
-};
-
-debug_command Debugger::parseCommand(std::string str){
-    std::vector<std::string> args;
-    try{
-        args=splitCommand(str);
-    }catch(UnclosedStringException &e){
-        return {CMD_INVALID,{str,"Unclosed quoted string"}};
-    }
-    if(args.size()>0){
-        if(command_map.find(args[0])!=command_map.end()){
-            return {command_map[args[0]],args};
-        }else{
-            return {CMD_INVALID,{str,"'"+str+"' is not a valid command"}};
-        }
-    }else{
-        return {CMD_INVALID,{str,"command must not be empty"}};
-    }
-    return {CMD_INVALID,{str,"unknown error parsing command"}};
-}
-
-static void clearline(){
-    int y,x;
-    getyx(stdscr,y,x);
-    move(y,0);
-    clrtoeol();
-}
-
-static void clearchar(){
-    int y,x;
-    getyx(stdscr,y,x);
-    move(y,x-1);
-    clrtoeol();
-}
-
 void Debugger::startDebug(){
-    //noecho();
     timeout(10);
     printw("Debugging Started\n\n>");
     debug_command cmd;
@@ -101,7 +58,6 @@ void Debugger::startDebug(){
         if(c!=-1){
             //if char is /n, try to parse command, else add char to buffer and print it out
             if(c=='\n'){
-                //clearline();
                 cmd=parseCommand(buffer);
                 buffer="";
                 runCommand(cmd);
@@ -109,11 +65,9 @@ void Debugger::startDebug(){
             }else if(c=='\b'){
                 if(buffer.length()>0){
                     buffer.resize(buffer.length()-1);
-                    //clearchar();
                     clrtoeol();
                 }
             }else{
-                //printw("%c",c);
                 buffer+=c;
             }
         }

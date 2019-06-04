@@ -80,6 +80,7 @@
 		<Unit filename="src/Debugger/Debugger.cpp" />
 		<Unit filename="src/Debugger/commands/exit.cpp" />
 		<Unit filename="src/Debugger/commands/help.cpp" />
+		<Unit filename="src/Debugger/parseCommand.cpp" />
 		<Unit filename="src/Debugger/runCommand.cpp" />
 		<Unit filename="src/Disassembler/Disassembler.cpp" />
 		<Unit filename="src/Emulator.cpp" />

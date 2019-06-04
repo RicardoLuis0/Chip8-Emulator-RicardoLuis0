@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <stdexcept>
 
 #include "CPU.h"
 #include "SDLHandlerDebug.h"
@@ -19,6 +20,10 @@ struct debug_command{
 
 
 class Debugger {
+    class UnclosedStringException:std::runtime_error{
+        public:
+            UnclosedStringException();
+    };
     public:
         Debugger();
         void startDebug();
