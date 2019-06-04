@@ -82,6 +82,7 @@
 		<Unit filename="src/Debugger/commands/help.cpp" />
 		<Unit filename="src/Debugger/parseCommand.cpp" />
 		<Unit filename="src/Debugger/runCommand.cpp" />
+		<Unit filename="src/Debugger/splitCommand.cpp" />
 		<Unit filename="src/Disassembler/Disassembler.cpp" />
 		<Unit filename="src/Emulator.cpp" />
 		<Unit filename="src/FileLoader.cpp" />
