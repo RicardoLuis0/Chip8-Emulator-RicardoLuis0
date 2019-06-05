@@ -16,6 +16,8 @@ enum debug_command_enum{
     CMD_STOP,
     CMD_STEP,
     CMD_CLEAR,
+    CMD_RAMDUMP,
+    CMD_VRAMDUMP,
 };
 
 struct debug_command{
@@ -42,6 +44,8 @@ class Debugger {
         void command_stop(std::vector<std::string> args);
         void command_step(std::vector<std::string> args);
         void command_clear(std::vector<std::string> args);
+        void command_ramdump(std::vector<std::string> args);
+        void command_vramdump(std::vector<std::string> args);
         //misc
         bool running;
         static std::vector<std::string> splitCommand(std::string s);

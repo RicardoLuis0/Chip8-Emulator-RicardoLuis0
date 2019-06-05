@@ -9,6 +9,8 @@ std::map<debug_command_enum,void(Debugger::*)(std::vector<std::string> args)> De
     {CMD_STOP,Debugger::command_stop},
     {CMD_STEP,Debugger::command_step},
     {CMD_CLEAR,Debugger::command_clear},
+    {CMD_RAMDUMP,Debugger::command_ramdump},
+    {CMD_VRAMDUMP,Debugger::command_vramdump},
 };
 
 void Debugger::runCommand(debug_command cmd){
