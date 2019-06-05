@@ -39,3 +39,5 @@
 #Obj/Bin folders
 bin/
 obj/
+*.vramdump
+*.ramdump
