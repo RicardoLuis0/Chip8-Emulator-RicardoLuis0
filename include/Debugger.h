@@ -18,13 +18,13 @@ enum debug_command_enum{
     CMD_CLEAR,
     CMD_RAMDUMP,
     CMD_VRAMDUMP,
+    CMD_EXEC_OP,
 };
 
 struct debug_command{
     debug_command_enum type;
     std::vector<std::string> args;
 };
-
 
 class Debugger {
     class UnclosedStringException:std::runtime_error{
@@ -46,6 +46,7 @@ class Debugger {
         void command_clear(std::vector<std::string> args);
         void command_ramdump(std::vector<std::string> args);
         void command_vramdump(std::vector<std::string> args);
+        void command_exec_op(std::vector<std::string> args);
         //misc
         bool running;
         static std::vector<std::string> splitCommand(std::string s);
