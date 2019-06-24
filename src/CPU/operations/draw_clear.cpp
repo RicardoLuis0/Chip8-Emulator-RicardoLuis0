@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <cstring>
 
-#define VRAMPOS(x,y) (y*32+x)
+#define VRAMPOS(x,y) ((y)*64+(x))
 
 #define GETBIT(v,b) ((v>>b)&0x1)
 
