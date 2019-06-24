@@ -2,6 +2,7 @@
 #define DEBUGGER_H
 
 #include <vector>
+#include <set>
 #include <map>
 #include <stdexcept>
 
@@ -19,6 +20,7 @@ enum debug_command_enum{
     CMD_RAMDUMP,
     CMD_VRAMDUMP,
     CMD_EXEC_OP,
+    CMD_BREAK,
 };
 
 struct debug_command{
@@ -47,14 +49,17 @@ class Debugger {
         void command_ramdump(std::vector<std::string> args);
         void command_vramdump(std::vector<std::string> args);
         void command_exec_op(std::vector<std::string> args);
+        void command_break(std::vector<std::string> args);
         //misc
         bool running;
+        bool justresumed;
         static std::vector<std::string> splitCommand(std::string s);
         debug_command parseCommand(std::string str);
         CPU cpu;
         SDLHandlerDebug sdlhandler;
         static std::map<std::string,debug_command_enum> command_map;
         static std::map<debug_command_enum,void(Debugger::*)(std::vector<std::string> args)> command_fp_map;
+        std::set<uint32_t> breakpoints;
     private:
 };
 

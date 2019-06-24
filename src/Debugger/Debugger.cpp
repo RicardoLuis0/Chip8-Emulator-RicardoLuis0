@@ -14,6 +14,7 @@ void Debugger::startDebug(){
     cpu.clearVRAM();
     cpu.clearRegisters();
     running=false;
+    justresumed=false;
     while(1){
         //getch with timeout
         char c=getch();
@@ -28,10 +29,21 @@ void Debugger::startDebug(){
                 if(buffer.length()>0){
                     buffer.resize(buffer.length()-1);
                     clrtoeol();
+                }else{
+                    printw(">");
                 }
             }else{
                 buffer+=c;
             }
+        }
+        //check breakpoint
+        if(running&&!justresumed&&breakpoints.count(cpu.PC)>0){
+            int tx,ty;
+            getyx(stdscr,ty,tx);
+            move(ty,0);
+            clrtoeol();
+            mvprintw(ty,0,"breakpoint @0x%03lx (%lu) triggered, pausing execution.\n>%s",cpu.PC,cpu.PC,buffer.c_str());
+            running=false;
         }
         if(running){
             sdlhandler.update(cpu);
@@ -39,5 +51,6 @@ void Debugger::startDebug(){
         }else{
             sdlhandler.pollEvents(cpu);
         }
+        justresumed=false;
     }
 }

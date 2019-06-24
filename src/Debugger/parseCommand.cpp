@@ -11,6 +11,7 @@ std::map<std::string,debug_command_enum> Debugger::command_map{
     {"ramdump",CMD_RAMDUMP},
     {"vramdump",CMD_VRAMDUMP},
     {"exec_op",CMD_EXEC_OP},
+    {"break",CMD_BREAK},
 };
 
 debug_command Debugger::parseCommand(std::string str){

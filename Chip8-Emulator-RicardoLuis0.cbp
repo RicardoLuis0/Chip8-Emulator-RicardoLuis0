@@ -78,6 +78,7 @@
 		<Unit filename="src/CPU/operations/skip.cpp" />
 		<Unit filename="src/CPU/runInstruction.cpp" />
 		<Unit filename="src/Debugger/Debugger.cpp" />
+		<Unit filename="src/Debugger/commands/break.cpp" />
 		<Unit filename="src/Debugger/commands/clear.cpp" />
 		<Unit filename="src/Debugger/commands/exec_op.cpp" />
 		<Unit filename="src/Debugger/commands/exit.cpp" />

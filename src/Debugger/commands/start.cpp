@@ -7,5 +7,6 @@ void Debugger::command_start(std::vector<std::string> args){
     }else{
         printw("Resuming Emulation\n");
         running=true;
+        justresumed=true;
     }
 }
