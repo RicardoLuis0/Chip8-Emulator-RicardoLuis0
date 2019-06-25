@@ -13,6 +13,7 @@ std::map<debug_command_enum,void(Debugger::*)(std::vector<std::string> args)> De
     {CMD_VRAMDUMP,Debugger::command_vramdump},
     {CMD_EXEC_OP,Debugger::command_exec_op},
     {CMD_BREAK,Debugger::command_break},
+    {CMD_READ_REGISTERS,Debugger::command_read_registers},
 };
 
 void Debugger::runCommand(debug_command cmd){

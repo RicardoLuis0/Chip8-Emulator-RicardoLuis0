@@ -21,6 +21,7 @@ enum debug_command_enum{
     CMD_VRAMDUMP,
     CMD_EXEC_OP,
     CMD_BREAK,
+    CMD_READ_REGISTERS,
 };
 
 struct debug_command{
@@ -50,6 +51,7 @@ class Debugger {
         void command_vramdump(std::vector<std::string> args);
         void command_exec_op(std::vector<std::string> args);
         void command_break(std::vector<std::string> args);
+        void command_read_registers(std::vector<std::string> args);
         //misc
         bool running;
         bool justresumed;

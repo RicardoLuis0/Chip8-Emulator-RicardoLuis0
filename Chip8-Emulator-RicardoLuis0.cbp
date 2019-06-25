@@ -85,6 +85,7 @@
 		<Unit filename="src/Debugger/commands/help.cpp" />
 		<Unit filename="src/Debugger/commands/load.cpp" />
 		<Unit filename="src/Debugger/commands/ramdump.cpp" />
+		<Unit filename="src/Debugger/commands/read_registers.cpp" />
 		<Unit filename="src/Debugger/commands/start.cpp" />
 		<Unit filename="src/Debugger/commands/step.cpp" />
 		<Unit filename="src/Debugger/commands/stop.cpp" />
