@@ -15,7 +15,7 @@ void CPU::draw_sprite(uint8_t X,uint8_t Y,uint8_t height){//draw sprite stored i
     uint8_t ypos=V[Y];
     VF=0x0;
     for(int i=0;i<height;i++){
-        for(int j=0;j<8;j++){
+        for(int j=7;j>=0;j--){
             if(GETBIT(RAM[I+i],j)){
                 size_t pos=VRAMPOS(xpos+j,ypos+i);
                 VRAM[pos]^=1;

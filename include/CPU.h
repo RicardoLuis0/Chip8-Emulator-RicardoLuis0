@@ -77,7 +77,7 @@ class CPU {
         void read_key(uint8_t X);//wait for keypress, and store it at V[X]
         void move(uint8_t X,uint8_t value);//move value to V[X]
         void move_reg(uint8_t X,uint8_t Y);//move V[Y] to V[X]
-        void move_i(uint8_t value);//move value to I
+        void move_i(uint16_t value);//move value to I
         void move_reg_dt(uint8_t X);//move DT to V[X]
         void move_dt(uint8_t X);//move DT to V[X]
         void move_st(uint8_t X);//move ST to V[X]

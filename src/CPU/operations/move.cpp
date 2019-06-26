@@ -9,7 +9,7 @@ void CPU::move_reg(uint8_t X,uint8_t Y){//move V[Y] to V[X]
     V[X]=V[Y];
 }
 
-void CPU::move_i(uint8_t value){//move value to I
+void CPU::move_i(uint16_t value){//move value to I
     I=value;
 }
 

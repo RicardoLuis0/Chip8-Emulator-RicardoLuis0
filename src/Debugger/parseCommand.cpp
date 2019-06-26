@@ -10,10 +10,10 @@ std::map<std::string,debug_command_enum> Debugger::command_map{
     {"clear",CMD_CLEAR},
     {"ramdump",CMD_RAMDUMP},
     {"vramdump",CMD_VRAMDUMP},
-    {"exec_op",CMD_EXEC_SP},
+    {"exec_sp",CMD_EXEC_SP},
     {"break",CMD_BREAK},
     {"read_registers",CMD_READ_REGISTERS},
-    {"peek_mem",CMD_PEEK_MEM},
+    {"peek",CMD_PEEK},
 };
 
 debug_command Debugger::parseCommand(std::string str){

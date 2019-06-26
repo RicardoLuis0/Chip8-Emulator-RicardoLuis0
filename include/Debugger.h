@@ -22,7 +22,7 @@ enum debug_command_enum{
     CMD_EXEC_SP,
     CMD_BREAK,
     CMD_READ_REGISTERS,
-    CMD_PEEK_MEM,
+    CMD_PEEK,
 };
 
 struct debug_command{
@@ -55,7 +55,7 @@ class Debugger {
         void command_exec(std::vector<std::string> args);
         void command_break(std::vector<std::string> args);
         void command_read_registers(std::vector<std::string> args);
-        void command_peek_mem(std::vector<std::string> args);
+        void command_peek(std::vector<std::string> args);
         //misc
         bool running;
         bool justresumed;

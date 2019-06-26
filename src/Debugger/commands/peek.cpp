@@ -3,7 +3,7 @@
 #include <curses.h>
 
 
-void Debugger::command_peek_mem(std::vector<std::string> args){
+void Debugger::command_peek(std::vector<std::string> args){
     if(args.size()<4){
         printw("missing arguments: rel|pos negative_offset positive_offset\n");
         return;

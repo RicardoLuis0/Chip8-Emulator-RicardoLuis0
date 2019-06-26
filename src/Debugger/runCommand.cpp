@@ -14,7 +14,7 @@ std::map<debug_command_enum,void(Debugger::*)(std::vector<std::string> args)> De
     {CMD_EXEC_SP,Debugger::command_exec_sp},
     {CMD_BREAK,Debugger::command_break},
     {CMD_READ_REGISTERS,Debugger::command_read_registers},
-    {CMD_PEEK_MEM,Debugger::command_peek_mem},
+    {CMD_PEEK,Debugger::command_peek},
 };
 
 void Debugger::runCommand(debug_command cmd){
