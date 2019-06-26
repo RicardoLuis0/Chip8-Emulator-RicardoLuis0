@@ -84,7 +84,7 @@
 		<Unit filename="src/Debugger/commands/exit.cpp" />
 		<Unit filename="src/Debugger/commands/help.cpp" />
 		<Unit filename="src/Debugger/commands/load.cpp" />
-		<Unit filename="src/Debugger/commands/peek_mem.cpp" />
+		<Unit filename="src/Debugger/commands/peek.cpp" />
 		<Unit filename="src/Debugger/commands/ramdump.cpp" />
 		<Unit filename="src/Debugger/commands/read_registers.cpp" />
 		<Unit filename="src/Debugger/commands/start.cpp" />
