@@ -5,6 +5,10 @@ Debugger::Debugger(){
     
 }
 
+uint32_t Debugger::read_num(std::string s){
+    return (s.substr(0,2)=="0x")?stoul(s.substr(2),nullptr,16):stoul(s);
+}
+
 void Debugger::startDebug(){
     timeout(10);
     printw("Debugging Started\n\n>");

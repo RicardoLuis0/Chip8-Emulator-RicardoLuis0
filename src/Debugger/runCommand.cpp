@@ -11,9 +11,10 @@ std::map<debug_command_enum,void(Debugger::*)(std::vector<std::string> args)> De
     {CMD_CLEAR,Debugger::command_clear},
     {CMD_RAMDUMP,Debugger::command_ramdump},
     {CMD_VRAMDUMP,Debugger::command_vramdump},
-    {CMD_EXEC_OP,Debugger::command_exec_op},
+    {CMD_EXEC_SP,Debugger::command_exec_sp},
     {CMD_BREAK,Debugger::command_break},
     {CMD_READ_REGISTERS,Debugger::command_read_registers},
+    {CMD_PEEK_MEM,Debugger::command_peek_mem},
 };
 
 void Debugger::runCommand(debug_command cmd){
@@ -22,6 +23,6 @@ void Debugger::runCommand(debug_command cmd){
     }else if(command_fp_map.find(cmd.type)!=command_fp_map.end()){
         (this->*command_fp_map[cmd.type])(cmd.args);
     }else{
-        printw("Unknown command type: %x\n",cmd.type);
+        printw("Unknown command type: %u\n",cmd.type);
     }
 }

@@ -19,9 +19,10 @@ enum debug_command_enum{
     CMD_CLEAR,
     CMD_RAMDUMP,
     CMD_VRAMDUMP,
-    CMD_EXEC_OP,
+    CMD_EXEC_SP,
     CMD_BREAK,
     CMD_READ_REGISTERS,
+    CMD_PEEK_MEM,
 };
 
 struct debug_command{
@@ -38,6 +39,7 @@ class Debugger {
         Debugger();
         void startDebug();
     protected:
+        static uint32_t read_num(std::string);//throws
         //commands
         void runCommand(debug_command cmd);
         void command_exit(std::vector<std::string> args);
@@ -49,9 +51,11 @@ class Debugger {
         void command_clear(std::vector<std::string> args);
         void command_ramdump(std::vector<std::string> args);
         void command_vramdump(std::vector<std::string> args);
-        void command_exec_op(std::vector<std::string> args);
+        void command_exec_sp(std::vector<std::string> args);
+        void command_exec(std::vector<std::string> args);
         void command_break(std::vector<std::string> args);
         void command_read_registers(std::vector<std::string> args);
+        void command_peek_mem(std::vector<std::string> args);
         //misc
         bool running;
         bool justresumed;

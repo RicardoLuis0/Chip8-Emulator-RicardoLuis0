@@ -1,7 +1,7 @@
 #include "Debugger.h"
 #include <curses.h>
 
-void Debugger::command_exec_op(std::vector<std::string> args){
+void Debugger::command_exec_sp(std::vector<std::string> args){
     //exec_op draw_font X Y letter
     //exec_op clear_screen
     if(args.size()<2){

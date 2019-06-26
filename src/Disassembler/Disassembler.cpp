@@ -11,6 +11,9 @@ std::string disassembled_instruction::getDisplay(){
 std::string disassembled_instruction::getDisplay(uint16_t location){
     return (valid?asm_str+";":";INVALID ")+getHex(data.whole,4)+"@"+getHex(location,4)+"\n";
 }
+std::string disassembled_instruction::getDisplay2(uint16_t location){
+    return "@"+getHex(location,3)+": ("+getHex(data.whole,4)+") "+(valid?asm_str:"INVALID OPCODE")+"\n";
+}
 
 disassembled_instruction Disassembler::disassembleInstruction(uint8_t byte0,uint8_t byte1){
     return disassembleInstruction(RawInstruction(byte0,byte1));
@@ -24,6 +27,7 @@ disassembled_instruction Disassembler::disassembleInstruction(RawInstruction ins
     operation_t op=CPU::decodeInstruction(instruction);
     switch(op){
     case SYS://SYS NNN
+        if(instruction.whole==0)return disassembled_instruction(instruction,"NOP");
         return disassembled_instruction(instruction,"SYS "+getHex(instruction.section234,3));
     case CLS://CLS
         return disassembled_instruction(instruction,"CLS");

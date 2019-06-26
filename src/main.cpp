@@ -34,6 +34,7 @@ std::string getline_curs(){
 
 int main(int argc,char ** argv){
     initscr();
+    scrollok(stdscr,true);
     printw("Chip8 Emulator\nby RicardoLuis0\n\nSeeding random number generator...");
     srand(time(NULL));
     printw("Done\nParsing Arguments...");

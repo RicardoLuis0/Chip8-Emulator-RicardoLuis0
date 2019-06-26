@@ -1,12 +1,12 @@
 #include "Debugger.h"
 #include <curses.h>
 
-
-#define GET_HEXPOS() if(args.size()<3){printw("missing position argument\n");return;}bool is_hex=args[2].substr(0,2)=="0x";uint32_t pos=is_hex?stoul(args[2].substr(2),nullptr,16):stoul(args[2]);
+#define GET_HEXPOS() if(args.size()<3){printw("missing position argument\n");return;}uint32_t pos=read_num(args[2]);
 
 void Debugger::command_break(std::vector<std::string> args){
     if(args.size()<2){
         printw("missing action argument\n");
+        return;
     }
     if(args[1]=="set"){
         GET_HEXPOS()
