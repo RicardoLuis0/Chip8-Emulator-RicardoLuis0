@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <cstring>
 
+#include <curses.h>
+
 std::array<uint8_t,2048> CPU::getVRAMData(){
     std::array<uint8_t,2048> temp;
     std::copy_n(std::begin(VRAM),2048,temp.begin());

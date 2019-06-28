@@ -1,5 +1,7 @@
 #include "Debugger.h"
+#include "QuitException.h"
 #include <curses.h>
+
 
 Debugger::Debugger(){
     
@@ -10,7 +12,7 @@ uint32_t Debugger::read_num(std::string s){
 }
 
 void Debugger::startDebug(){
-    timeout(10);
+    timeout(1);
     printw("\nDebugging Terminal Started, type 'help' for available commands\n\n>");
     debug_command cmd;
     std::string buffer;
@@ -19,6 +21,7 @@ void Debugger::startDebug(){
     cpu.clearRegisters();
     running=false;
     justresumed=false;
+    do_breaks=false;
     while(1){
         //getch with timeout
         char c=getch();
@@ -41,7 +44,7 @@ void Debugger::startDebug(){
             }
         }
         //check breakpoint
-        if(running&&!justresumed&&breakpoints.count(cpu.PC)>0){
+        if(do_breaks&&running&&!justresumed&&breakpoints.count(cpu.PC)>0){
             int tx,ty;
             getyx(stdscr,ty,tx);
             move(ty,0);
@@ -50,10 +53,14 @@ void Debugger::startDebug(){
             running=false;
         }
         if(running){
-            sdlhandler.update(cpu);
+            if(sdlhandler.update(cpu)){
+                throw QuitException(0);
+            }
             cpu.doCycle();
         }else{
-            sdlhandler.pollEvents(cpu);
+            if(sdlhandler.pollEvents(cpu)){
+                throw QuitException(0);
+            }
         }
         justresumed=false;
     }

@@ -2,7 +2,8 @@
 #include <ctime>
 #include <cstdio>
 #include <fstream>
-
+#include <chrono>
+#include <thread>
 
 #include <SDL2/SDL.h>
 #include "ArgumentParser.h"
@@ -113,6 +114,7 @@ int main(int argc,char ** argv){
             printw("Done.\nStarting Emulation.\n");
             while(1){
                 try{
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1));
                     if(display.update(cpu)){
                         break;
                     }

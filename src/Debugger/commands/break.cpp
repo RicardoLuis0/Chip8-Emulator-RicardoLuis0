@@ -8,7 +8,13 @@ void Debugger::command_break(std::vector<std::string> args){
         printw("missing action argument\n");
         return;
     }
-    if(args[1]=="set"){
+    if(args[1]=="start"){
+        printw("breaking enabled\n");
+        do_breaks=true;
+    }else if(args[1]=="stop"){
+        printw("breaking disabled\n");
+        do_breaks=false;
+    }else if(args[1]=="set"){
         GET_HEXPOS()
         breakpoints.insert(pos);
         printw("breakpoint @0x%03lx (%lu) set\n",pos,pos);

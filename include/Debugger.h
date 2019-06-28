@@ -59,6 +59,7 @@ class Debugger {
         //misc
         bool running;
         bool justresumed;
+        bool do_breaks;
         static std::vector<std::string> splitCommand(std::string s);
         debug_command parseCommand(std::string str);
         CPU cpu;
