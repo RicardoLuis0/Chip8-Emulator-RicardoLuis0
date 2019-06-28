@@ -6,7 +6,6 @@
 
 #include <SDL2/SDL.h>
 #include "ArgumentParser.h"
-#include "Emulator.h"
 #include "FileLoader.h"
 #include "splitString.h"
 #include "Disassembler.h"
