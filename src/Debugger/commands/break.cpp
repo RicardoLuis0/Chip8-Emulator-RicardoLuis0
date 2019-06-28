@@ -15,6 +15,7 @@ void Debugger::command_break(std::vector<std::string> args){
         printw("breaking disabled\n");
         do_breaks=false;
     }else if(args[1]=="set"){
+        do_breaks=true;
         GET_HEXPOS()
         breakpoints.insert(pos);
         printw("breakpoint @0x%03lx (%lu) set\n",pos,pos);
