@@ -102,8 +102,10 @@ bool SDLHandler::handleEvent(CPU &cpu,union SDL_Event * e){
         return true;
     case SDL_KEYDOWN:
         handleKey(cpu,e->key.keysym.sym,false);
+        break;
     case SDL_KEYUP:
         handleKey(cpu,e->key.keysym.sym,true);
+        break;
     default:
         break;
     }
