@@ -12,6 +12,8 @@
 #include "SDLHandler.h"
 #include "Debugger.h"
 
+#include <cstring>
+
 #include <curses.h>
 #include "QuitException.h"
 
@@ -31,35 +33,38 @@ std::string getline_curs(){
     return buffer;
 }
 
+std::map<std::string,bool> paramdata{
+    {"file",true},
+    {"debug",false},
+    {"disassemble",false},
+};
+
 int main(int argc,char ** argv){
+    std::string file;
+    std::string usage("\nUsage:\n\t-file [filename]\t: filename to open, does not apply to debug mode\n\t-debug\t\t\t: debug mode\n\t-disassemble\t\t: disassemble ROM\n");
+    Arguments args({});
+    try{
+        args=ArgumentParser::parse(argc,argv,paramdata);
+    }catch(std::runtime_error &e){
+        std::string temp(e.what());
+        if(temp.substr(0,12)=="MISSINGVALUE"){
+            printf("Error.\nMissing value for -%s parameter\n",std::string(e.what()).substr(12).c_str());
+        }else{
+            printf("Error.\nInvalid parameter -%s\n%s",temp.c_str(),usage.c_str());
+        }
+        return 1;
+    }
+    //read file option
+    if(!args.hasOption("file")&&!args.hasOption("debug")){
+        printf("Error.\nMissing -file parameter.\n%s",usage.c_str());
+        return 1;
+    }
+    if(args.hasOption("file"))file=args.getOption("file");
     initscr();
     scrollok(stdscr,true);
     printw("Chip8 Emulator\nby RicardoLuis0\n\nSeeding random number generator...");
     srand(time(NULL));
-    printw("Done\nParsing Arguments...");
     refresh();
-    Arguments args=ArgumentParser::parse(argc,argv);
-    std::string file;
-    //read file option
-    if(args.hasOption("file")){
-        file=args.getOption("file");
-        printw("Done.\n");
-        refresh();
-    }else if(!args.hasOption("debug")){
-        printw("Error\n >Missing required parameter \"-file\"\n");
-        printw("Getting file parameter input from user...");
-        int sv1_x,sv1_y,sv2_x,sv2_y;
-        getyx(stdscr,sv1_y,sv1_x);
-        printw("\n >Please Enter file to load:");
-        file=getline_curs();
-        refresh();
-        getyx(stdscr,sv2_y,sv2_x);
-        mvprintw(sv1_y,sv1_x,"Done.");
-        move(sv2_y,sv2_x);
-        refresh();
-    }else{
-        printw("Done.\n");
-    }
     printw("Initializing SDL2...");
     if(SDL_Init(SDL_INIT_VIDEO)!=0){
         printw("Error.\n >Error while Initializing SDL: %s\n",SDL_GetError());

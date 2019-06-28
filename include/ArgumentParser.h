@@ -14,7 +14,7 @@ class ArgumentParser {
          * @param argv: list of arguments
          * @return Arguments object created from inputs
          */
-        static Arguments parse(int argc,char ** argv);
+        static Arguments parse(int argc,char ** argv,std::map<std::string,bool> exists);
 };
 
 #endif // ARGUMENTPARSER_H

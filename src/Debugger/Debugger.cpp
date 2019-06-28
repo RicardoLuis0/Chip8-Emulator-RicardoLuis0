@@ -11,7 +11,7 @@ uint32_t Debugger::read_num(std::string s){
 
 void Debugger::startDebug(){
     timeout(10);
-    printw("Debugging Started\n\n>");
+    printw("\nDebugging Terminal Started, type 'help' for available commands\n\n>");
     debug_command cmd;
     std::string buffer;
     cpu.clearRAM();

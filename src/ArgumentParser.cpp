@@ -1,37 +1,37 @@
 #include "ArgumentParser.h"
 
-using std::map;
-using std::string;
+//std::map<std::string,bool> name,uses_parameter
 
-Arguments ArgumentParser::parse(int argc,char ** argv){
-    bool filename_read=false;
+Arguments ArgumentParser::parse(int argc,char ** argv,std::map<std::string,bool> option_types){
     bool reading_option=false;
-    string option;
-    map<string,string> options;
+    std::string option;
+    std::map<std::string,std::string> options;
     char * str;
     for(int i=1;i<argc&&(str=argv[i]);i++){
         if(str[0]=='-'){
             if(str[1]!='\0'){
                 if(reading_option){
+                    throw std::runtime_error("MISSINGVALUE"+option);
+                }
+                option=std::string(&str[1]);
+                if(option_types.find(option)==option_types.end()){
+                    throw std::runtime_error(option);
+                }
+                if(option_types[option]){
+                    reading_option=true;
+                }else{
                     options[option]="";
                 }
-                option=string(&str[1]);
-                reading_option=true;
                 continue;
             }
         }
         if(reading_option){
-            if(option=="file"){
-                filename_read=true;
-            }
-            options[option]=string(str);
+            options[option]=std::string(str);
             reading_option=false;
-        }else if(!filename_read){
-            options["file"]=string(str);
         }
     }
     if(reading_option){
-        options[option]="";
+        throw std::runtime_error("MISSINGVALUE"+option);
     }
     return Arguments(options);
 }
