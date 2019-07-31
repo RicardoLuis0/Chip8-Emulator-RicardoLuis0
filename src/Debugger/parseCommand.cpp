@@ -8,11 +8,8 @@ std::map<std::string,debug_command_enum> Debugger::command_map{
     {"stop",CMD_STOP},
     {"step",CMD_STEP},
     {"clear",CMD_CLEAR},
-    {"ramdump",CMD_RAMDUMP},
-    {"vramdump",CMD_VRAMDUMP},
     {"exec_sp",CMD_EXEC_SP},
     {"break",CMD_BREAK},
-    {"read_registers",CMD_READ_REGISTERS},
     {"peek",CMD_PEEK},
 };
 

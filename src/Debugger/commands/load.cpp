@@ -2,9 +2,18 @@
 #include <curses.h>
 
 void Debugger::command_load(std::vector<std::string> args){
-    if(args.size()<2){
-        printw("Missing filename argument, usage: load filename\n");
+    if(args[0]=="help"||(args.size()>1&&args[1]=="help")){
+        printw("Command: %s\n",command_help_map["load"].c_str());
+    print_usage:
+        printw("\nUsage:");
+        printw("\n  'load [filename]'\n  - Load ROM file into RAM\n");
         return;
+    invalid_usage:
+        printw("Invalid Usage\n");
+        goto print_usage;
+    }
+    if(args.size()<2){
+        goto invalid_usage;
     }
     try{
         cpu.loadProgram(args[1]);

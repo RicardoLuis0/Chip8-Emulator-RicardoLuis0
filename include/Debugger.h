@@ -17,11 +17,8 @@ enum debug_command_enum{
     CMD_STOP,
     CMD_STEP,
     CMD_CLEAR,
-    CMD_RAMDUMP,
-    CMD_VRAMDUMP,
     CMD_EXEC_SP,
     CMD_BREAK,
-    CMD_READ_REGISTERS,
     CMD_PEEK,
 };
 
@@ -54,7 +51,6 @@ class Debugger {
         void command_exec_sp(std::vector<std::string> args);
         void command_exec(std::vector<std::string> args);
         void command_break(std::vector<std::string> args);
-        void command_read_registers(std::vector<std::string> args);
         void command_peek(std::vector<std::string> args);
         //misc
         bool running;
@@ -64,6 +60,7 @@ class Debugger {
         debug_command parseCommand(std::string str);
         CPU cpu;
         SDLHandlerDebug sdlhandler;
+        static std::map<std::string,std::string> command_help_map;
         static std::map<std::string,debug_command_enum> command_map;
         static std::map<debug_command_enum,void(Debugger::*)(std::vector<std::string> args)> command_fp_map;
         std::set<uint32_t> breakpoints;
