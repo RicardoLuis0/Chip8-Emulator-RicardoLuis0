@@ -1,5 +1,5 @@
 #include "CPU.h"
-#include <iostream>
+#include <curses.h>
 
 void CPU::doCycle(){
     if(waiting_for_input)return;
@@ -7,7 +7,7 @@ void CPU::doCycle(){
     runInstruction(decodeInstruction(d),d);
     if(DT>0)DT--;
     if(ST>0){
-        std::cout<<"\a";//TODO replace with sdl sound stuff
+        printw("\a");//TODO replace with sdl sound stuff
         ST--;
     }
 }
