@@ -3,7 +3,7 @@
 
 void Debugger::command_step(std::vector<std::string> args){
     if(args[0]=="help"||(args.size()>1&&args[1]=="help")){
-        printw("Command: %s\n",command_help_map["step"].c_str());
+        printw("Command: step%s\n",command_help_map["step"].c_str());
     print_usage:
         printw("\nUsage:");
         printw("\n  'step'\n  - Step by 1 Instruction\n");

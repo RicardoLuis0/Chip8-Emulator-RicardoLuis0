@@ -2,23 +2,30 @@
 #include <curses.h>
 
 std::map<std::string,std::string> Debugger::command_help_map{
-    {"exit","exit\t - exit program"},
-    {"help","help\t - show help"},
-    {"load","load\t - load rom"},
-    {"start","start\t - start/resume execution"},
-    {"stop","stop\t - stop/pause execution"},
-    {"step","step\t - step execution"},
-    {"clear","clear\t - clear terminal"},
-    {"exec_sp","exec_sp\t - execute special commands"},
-    {"break","break\t - Handle Breakpoints"},
-    {"peek","peek\t - print memory/register values"},
+    {"exit"," - exit program"},
+    {"help"," - list available commands"},
+    {"load"," - load rom"},
+    {"start"," - start/resume execution"},
+    {"stop"," - stop/pause execution"},
+    {"step"," - step execution"},
+    {"clear"," - clear terminal"},
+    {"exec_sp"," - execute special commands"},
+    {"break"," - Handle Breakpoints"},
+    {"peek"," - print memory/register values"},
 };
 
 void Debugger::command_help(std::vector<std::string> args){
+    if(args.size()>1&&args[1]=="help"){
+        printw("Command: help%s\n",command_help_map["help"].c_str());
+        printw("\nUsage:");
+        printw("\n  'help'\n  - List commands\n");
+        printw("\n  'help [command]'\n  - Display command usage\n");
+        return;
+    }
     if(args.size()==1){
         printw("Use 'help [command]' for usage information\n\nCommands:\n\n");
         for(auto pair:command_map){
-            printw("%s\n",command_help_map[pair.first.c_str()].c_str());
+            printw("%s\t%s\n",pair.first.c_str(),command_help_map[pair.first.c_str()].c_str());
         }
     }else{
         if(command_map.find(args[1])!=command_map.end()){

@@ -3,7 +3,7 @@
 
 void Debugger::command_exec_sp(std::vector<std::string> args){
     if(args[0]=="help"||(args.size()>1&&args[1]=="help")){
-        printw("Command: %s\n",command_help_map["exec_sp"].c_str());
+        printw("Command: exec_sp%s\n",command_help_map["exec_sp"].c_str());
     print_usage:
         printw("\nUsage:");
         printw("\n  'exec_sp clear_screen'\n  - Clear program VRAM\n");

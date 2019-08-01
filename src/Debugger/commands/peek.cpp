@@ -5,7 +5,7 @@
 
 void Debugger::command_peek(std::vector<std::string> args){
     if(args[0]=="help"||(args.size()>1&&args[1]=="help")){
-        printw("Command: %s\n",command_help_map["peek"].c_str());
+        printw("Command: peek%s\n",command_help_map["peek"].c_str());
     print_usage:
         printw("\nUsage:");
         printw("\n  'peek registers'\n  - Print Registers' Contents to Terminal\n");

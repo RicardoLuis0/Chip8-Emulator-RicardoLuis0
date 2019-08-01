@@ -5,7 +5,7 @@
 
 void Debugger::command_break(std::vector<std::string> args){
     if(args[0]=="help"||(args.size()>1&&args[1]=="help")){
-        printw("Command: %s\n",command_help_map["break"].c_str());
+        printw("Command: break%s\n",command_help_map["break"].c_str());
     print_usage:
         printw("\nUsage:");
         printw("\n  'break start'\n  - Enables breaking\n");

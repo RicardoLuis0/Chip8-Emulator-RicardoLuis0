@@ -63,8 +63,10 @@ int main(int argc,char ** argv){
     if(args.hasOption("file"))file=args.getOption("file");
     initscr();
     scrollok(stdscr,true);
-    printw("Chip8 Emulator\nby RicardoLuis0\n\nSeeding random number generator...");
+    printw("Chip8 Emulator\nby RicardoLuis0\n");
+    printw("\nSeeding random number generator...");
     srand(time(NULL));
+    printw("Done.\n");
     refresh();
     printw("Initializing SDL2...");
     if(SDL_Init(SDL_INIT_VIDEO)!=0){
