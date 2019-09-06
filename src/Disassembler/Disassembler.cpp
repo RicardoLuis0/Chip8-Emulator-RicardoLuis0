@@ -32,7 +32,7 @@ disassembled_instruction Disassembler::disassembleInstruction(RawInstruction ins
     case CLS://CLS
         return disassembled_instruction(instruction,"CLS");
     case RET://RET
-        return disassembled_instruction(instruction,"CLS");
+        return disassembled_instruction(instruction,"RET");
     case JMP://JMP NNN
         return disassembled_instruction(instruction,"JMP "+getHex(instruction.section234,3));
     case JMP_V0://JMP V0,NNN
